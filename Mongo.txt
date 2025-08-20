@@ -1,0 +1,28 @@
+Mongo
+rendkp
+BBFzB5XLC05M80zV
+mongodb+srv://rendkp:BBFzB5XLC05M80zV@clusterdkp.svemnzl.mongodb.net/?retryWrites=true&w=majority&appName=ClusterDKP
+mongodb+srv://rendkp:4GkZrofsTyKOmLEc@clusterdkp.svemnzl.mongodb.net/?retryWrites=true&w=majority&appName=ClusterDKP
+
+
+Discord
+1407440155467448411
+gjRTU_B1whvZNqEax4wOHMW85j44czsp
+
+https://dkp-opal.vercel.app/
+ed3cb8d5b3d3f2dfcde4a6abd44ee363
+
+Can you create a DKP tracking website with discord login? Similar to https://lootmanager.net/
+I need it to be hosted on free hosting for database and web services. 
+Code will be hosted in GitHub
+use Vercel
+use mongoDB
+Ask things that you need clarification on and provide step by step guide on how to set up.
+Create all the files needed at C:\Users\cjley\Desktop\DKP
+
+
+What features do you want for DKP tracking? add/remove points, event logs, item tracking, admin roles, pin verification for DKP claim, item bidding, character profile
+Should only Discord-authenticated users access the site, or should there be roles (admin/user)? discord authenticated users only
+Do you want a specific UI style/theme, or is a simple/clean look okay for now? Modern and Sleek and black themed
+Should the site be public or private (invite-only)? public
+Do you want to support multiple guilds/servers, or just one? multiple guilds
