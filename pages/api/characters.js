@@ -57,6 +57,13 @@ export default async function handler(req, res) {
     if (!className) return res.status(400).json({ error: 'Missing className' });
     if (!guildName) return res.status(400).json({ error: 'Missing guildName' });
     if (!userId) return res.status(400).json({ error: 'Missing userId' });
+
+    // Prevent duplicate character names (case-insensitive)
+    const existingChar = await db.collection(collections.CHARACTERS).findOne({ name: { $regex: `^${name}$`, $options: 'i' } });
+    if (existingChar) {
+      return res.status(400).json({ error: 'A character with this name already exists.' });
+    }
+
     // Create guild if it doesn't exist
     let guild = await db.collection(collections.GUILDS).findOne({ name: guildName });
     if (!guild) {
