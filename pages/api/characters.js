@@ -37,11 +37,11 @@ export default async function handler(req, res) {
   }
 
   if (req.method === 'GET') {
-    // Get all characters for a guild, or all if no guildId
+    // Get only characters for the logged-in user
     const { guildId } = req.query;
-    let query = {};
+    let query = { userId: session.user.id };
     if (guildId) query.guildId = guildId;
-    console.log('[GET /api/characters] guildId:', guildId);
+    console.log('[GET /api/characters] userId:', session.user.id, 'guildId:', guildId);
     const chars = await db.collection(collections.CHARACTERS).find(query).toArray();
     console.log('[GET /api/characters] found:', chars.length, 'characters');
     return res.json(chars);
