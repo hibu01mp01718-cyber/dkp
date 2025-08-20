@@ -33,24 +33,25 @@ export default function DKPForm({ characters, onSubmit }) {
       setLoading(false);
       return;
     }
-    // PIN verification: check pin matches event's pin
-    if (selectedEvent.pin !== pin) {
-      setError('Invalid PIN for this event.');
-      setLoading(false);
-      return;
-    }
-    // Award DKP for this event
-    const res = await fetch('/api/dkp', {
+    // Call backend to verify and claim DKP (enforces one-time use)
+    const res = await fetch('/api/verify-pin', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ characterId, amount: selectedEvent.dkp, reason: `Event: ${selectedEvent.name}`, eventId: selectedEvent._id }),
+      body: JSON.stringify({ characterId, pin, guildId: selectedEvent.guildId || '' }),
     });
     if (res.ok) {
       setSuccess('DKP claimed!');
       setPin('');
       if (onSubmit) onSubmit();
     } else {
-      setError('Failed to claim DKP');
+      const data = await res.json();
+      if (res.status === 409 && data.error) {
+        setError('This pin code has already been redeemed for this event.');
+      } else if (res.status === 403 && data.error) {
+        setError('Invalid PIN for this event.');
+      } else {
+        setError('Failed to claim DKP');
+      }
     }
     setLoading(false);
   };

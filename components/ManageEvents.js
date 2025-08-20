@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import AddEventForm from './AddEventForm';
 
 export default function ManageEvents() {
   const [events, setEvents] = useState([]);
@@ -98,6 +99,9 @@ export default function ManageEvents() {
   return (
     <div className="w-full max-w-3xl mx-auto px-2 sm:px-4 md:px-8 py-4">
       <h2 className="text-2xl font-bold mb-6">Manage Events</h2>
+      <div className="mb-6">
+        <AddEventForm />
+      </div>
       {error && <div className="text-red-400 mb-2">{error}</div>}
       {success && <div className="text-green-400 mb-2">{success}</div>}
       <div className="bg-card rounded-lg shadow p-4 md:p-6">
