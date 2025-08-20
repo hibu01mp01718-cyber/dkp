@@ -1,3 +1,4 @@
+import PromoteAdminForm from './PromoteAdminForm';
 import React, { useEffect, useState } from 'react';
 import AddEventForm from './AddEventForm';
 import AdminDKPOverride from './AdminDKPOverride';
@@ -193,6 +194,10 @@ export default function AdminPanel() {
 
   return (
     <div className="w-full max-w-5xl mx-auto px-2 sm:px-4 md:px-8 py-4 flex flex-col gap-8">
+      {/* Promote Admin Card */}
+      <div className="bg-card rounded-lg shadow p-4 md:p-6">
+        <PromoteAdminForm />
+      </div>
       {/* Classes Card */}
       <div className="bg-card rounded-lg shadow p-4 md:p-6">
         <h4 className="font-semibold mb-4 text-lg md:text-xl">Manage Classes</h4>

@@ -1,12 +1,13 @@
 import ManageEvents from '../components/ManageEvents';
+import Layout from '../components/Layout';
 import React from 'react';
 
 export default function AdminEventsPage() {
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <Layout>
       <div className="py-8">
         <ManageEvents />
       </div>
-    </div>
+    </Layout>
   );
 }

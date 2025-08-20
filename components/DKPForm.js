@@ -2,7 +2,13 @@ import { useState, useEffect } from 'react';
 import { CustomSelect } from './ui/CustomSelect';
 
 export default function DKPForm({ characters, onSubmit }) {
-  const [characterId, setCharacterId] = useState('');
+  const [characterId, setCharacterId] = useState(characters && characters.length > 0 ? characters[0]._id : '');
+  // Update selected character if characters prop changes
+  useEffect(() => {
+    if (characters && characters.length > 0) {
+      setCharacterId(prev => prev || characters[0]._id);
+    }
+  }, [characters]);
   const [eventName, setEventName] = useState('');
   const [events, setEvents] = useState([]);
   const [pin, setPin] = useState('');
@@ -84,7 +90,13 @@ export default function DKPForm({ characters, onSubmit }) {
       </div>
       {error && <div className="text-red-400 mb-2">{error}</div>}
       {success && <div className="text-green-400 mb-2">{success}</div>}
-      <button type="submit" className="bg-accent px-4 py-2 rounded" disabled={loading}>{loading ? 'Processing...' : 'Submit'}</button>
+      <button
+        type="submit"
+        className="bg-[#5865F2] hover:bg-[#4752c4] text-white px-6 py-2 rounded-lg font-semibold text-base transition mb-2 w-full max-w-xs mx-auto block"
+        disabled={loading}
+      >
+        {loading ? 'Processing...' : 'Submit'}
+      </button>
     </form>
   )
 }

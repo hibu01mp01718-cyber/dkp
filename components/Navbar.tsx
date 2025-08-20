@@ -16,30 +16,32 @@ export default function Navbar({ user, onLogout }) {
           {[
             { href: '/', label: 'Dashboard' },
             { href: '/characters', label: 'Characters' },
-            { href: '/items', label: 'Items' },
-            { href: '/events', label: 'Events' },
-            { href: '/bids', label: 'Bids' },
+            // { href: '/items', label: 'Items' },
+            // { href: '/events', label: 'Events' },
+            // { href: '/bids', label: 'Bids' },
             { href: '/leaderboard', label: 'Leaderboard' },
-          ].map(({ href, label }) => {
-            const isActive = typeof window !== 'undefined' && window.location.pathname === href;
-            return (
-              <a
-                key={href}
-                href={href}
-                className={`px-4 py-2 rounded-md font-medium text-base transition-colors duration-150
-                  ${isActive ? 'bg-accent/30 text-accent-foreground shadow-sm' : 'text-muted-foreground hover:bg-accent/10 hover:text-foreground'}
-                  focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/50`
-                }
-                style={{ textDecoration: 'none' }}
-              >
-                {label}
-              </a>
-            );
-          })}
+          ]
+            .concat(user?.isAdmin ? [{ href: '/admin-events', label: 'Admin Events' }] : [])
+            .map(({ href, label }) => {
+              const isActive = typeof window !== 'undefined' && window.location.pathname === href;
+              return (
+                <a
+                  key={href}
+                  href={href}
+                  className={`px-4 py-2 rounded-md font-medium text-base transition-colors duration-150
+                    ${isActive ? 'bg-accent/30 text-accent-foreground shadow-sm' : 'text-muted-foreground hover:bg-accent/10 hover:text-foreground'}
+                    focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/50`
+                  }
+                  style={{ textDecoration: 'none' }}
+                >
+                  {label}
+                </a>
+              );
+            })}
         </div>
       </div>
       {/* Bottom: User Profile */}
-      <div className="flex flex-col items-center gap-4 mt-8">
+  <div className="flex flex-col gap-4 mt-8">
         {user ? (
           <>
             <div className="flex items-center gap-2 px-2 py-1 rounded-lg bg-card/70 border border-border h-12 min-h-0 shadow-sm">
@@ -50,7 +52,7 @@ export default function Navbar({ user, onLogout }) {
               )}
               <div className="flex flex-col items-start text-left leading-tight">
                 <span className="text-sm font-semibold leading-tight">{user.name || 'Profile'}</span>
-                <span className="text-xs text-muted-foreground leading-tight">{user.id}</span>
+                <span className="text-[10px] text-muted-foreground leading-tight">{user.id}</span>
               </div>
             </div>
             <DropdownMenu>

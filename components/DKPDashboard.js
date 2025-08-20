@@ -21,7 +21,7 @@ export default function DKPDashboard({ dkp, characters }) {
   };
 
   return (
-    <div>
+  <div className="ml-8 sm:ml-16">
       <h2 className="text-3xl font-bold mb-6">DKP Dashboard</h2>
       <DashboardSummaryCards metrics={metrics} />
       <DashboardChart />
