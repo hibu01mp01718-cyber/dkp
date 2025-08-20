@@ -65,9 +65,6 @@ export default function Layout({ children }) {
         )}
       </aside>
       {/* Mobile sidebar toggle */}
-      <button className="fixed top-4 left-4 z-50 md:hidden bg-gray-800/80 p-2 rounded-lg shadow-lg hover:bg-gray-700/80 transition-colors" onClick={() => document.getElementById('sidebar').classList.remove('-translate-x-full')}>
-        <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" /></svg>
-      </button>
       {/* Main content */}
       <main className="flex-1 p-4 sm:p-8 max-w-7xl mx-auto w-full mt-4 md:mt-8 md:ml-72 transition-all">{children}</main>
     </div>
