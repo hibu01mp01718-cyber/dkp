@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { CustomSelect } from './ui/CustomSelect';
 
 export default function DKPForm({ characters, onSubmit }) {
   const [characterId, setCharacterId] = useState('');
@@ -59,27 +60,27 @@ export default function DKPForm({ characters, onSubmit }) {
   return (
     <form onSubmit={handleSubmit} className="bg-card rounded-lg p-4 shadow mb-6">
       <h3 className="text-lg font-semibold mb-2">Add/Remove DKP</h3>
-      <div className="mb-2">
-        <label className="block mb-1">Character</label>
-        <select value={characterId} onChange={e => setCharacterId(e.target.value)} className="w-full bg-background border border-gray-700 rounded p-2">
-          <option value="">Select character</option>
-          {characters.map(char => (
-            <option key={char._id} value={char._id}>{char.name}</option>
-          ))}
-        </select>
-      </div>
-      <div className="mb-2">
-        <label className="block mb-1">Event Name</label>
-        <select value={eventName} onChange={e => setEventName(e.target.value)} className="w-full bg-background border border-gray-700 rounded p-2" required>
-          <option value="" disabled>Select event</option>
-          {events.map(ev => (
-            <option key={ev.name} value={ev.name}>{ev.name} ({ev.dkp} DKP)</option>
-          ))}
-        </select>
-      </div>
+      <CustomSelect
+        label="Character"
+        value={characterId}
+        onChange={setCharacterId}
+        options={[
+          { value: '', label: 'Select character' },
+          ...characters.map(char => ({ value: char._id, label: char.name }))
+        ]}
+      />
+      <CustomSelect
+        label="Event Name"
+        value={eventName}
+        onChange={setEventName}
+        options={[
+          { value: '', label: 'Select event' },
+          ...events.map(ev => ({ value: ev.name, label: `${ev.name} (${ev.dkp} DKP)` }))
+        ]}
+      />
       <div className="mb-2">
         <label className="block mb-1">PIN</label>
-        <input type="password" value={pin} onChange={e => setPin(e.target.value)} className="w-full bg-background border border-gray-700 rounded p-2" required />
+  <input type="password" value={pin} onChange={e => setPin(e.target.value)} className="w-full bg-white text-black border border-gray-700 rounded p-2" required />
       </div>
       {error && <div className="text-red-400 mb-2">{error}</div>}
       {success && <div className="text-green-400 mb-2">{success}</div>}

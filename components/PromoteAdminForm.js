@@ -30,7 +30,7 @@ export default function PromoteAdminForm() {
       <h3 className="text-lg font-semibold mb-2">Promote User to Admin</h3>
       <div className="mb-2">
         <label className="block mb-1">User ID</label>
-        <input type="text" value={userId} onChange={e => setUserId(e.target.value)} className="w-full bg-background border border-gray-700 rounded p-2" required />
+  <input type="text" value={userId} onChange={e => setUserId(e.target.value)} className="w-full bg-white text-black border border-gray-700 rounded p-2" required />
       </div>
   {/* Guild ID field removed */}
       {error && <div className="text-red-400 mb-2">{error}</div>}

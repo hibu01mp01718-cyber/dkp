@@ -53,7 +53,7 @@ export default function BidForm({ items, characters, guildId, onSubmit }) {
       </div>
       <div className="mb-2">
         <label className="block mb-1">Bid Amount</label>
-        <input type="number" value={amount} onChange={e => setAmount(e.target.value)} className="w-full bg-background border border-gray-700 rounded p-2" required />
+  <input type="number" value={amount} onChange={e => setAmount(e.target.value)} className="w-full bg-white text-black border border-gray-700 rounded p-2" required />
       </div>
       {error && <div className="text-red-400 mb-2">{error}</div>}
       {success && <div className="text-green-400 mb-2">{success}</div>}

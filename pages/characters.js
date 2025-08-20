@@ -28,9 +28,9 @@ export default function CharactersPage() {
 
   return (
     <Layout>
-      <div className="w-full max-w-3xl mx-auto px-2 sm:px-4 md:px-8 py-4 flex flex-col gap-6">
+      <div className="w-full max-w-4xl mx-auto px-2 sm:px-4 md:px-8 py-4 flex flex-col gap-6">
         {status === "authenticated" && (
-          <div className="bg-card rounded-lg shadow p-4 md:p-6">
+          <div className="bg-card rounded-2xl shadow-lg p-4 md:p-6 mb-4">
             <CharacterForm
               userId={session?.user?.id}
               onSubmit={() => setRefresh(r => !r)}
@@ -38,7 +38,7 @@ export default function CharactersPage() {
             />
           </div>
         )}
-        <div className="bg-card rounded-lg shadow p-4 md:p-6 overflow-x-auto">
+        <div className="bg-card rounded-2xl shadow-lg p-4 md:p-6">
           <CharacterList characters={characters} />
         </div>
       </div>

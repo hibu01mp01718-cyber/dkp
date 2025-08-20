@@ -1,17 +1,32 @@
 
-import React from 'react'
-import { useSession } from 'next-auth/react'
-import DKPForm from './DKPForm'
+import React from 'react';
+import { useSession } from 'next-auth/react';
+import DKPForm from './DKPForm';
+import DashboardSummaryCards from './DashboardSummaryCards';
+import DashboardChart from './DashboardChart';
+import Card from './Card';
 
 export default function DKPDashboard({ dkp, characters }) {
   const { data: session } = useSession();
   const [refresh, setRefresh] = React.useState(false);
-  // Ensure characters is always an array
   const safeCharacters = Array.isArray(characters) ? characters : [];
+
+  // Only sum DKP for the current user's characters
+  const userId = session?.user?.id;
+  const userCharIds = safeCharacters.filter(c => c.userId === userId).map(c => c._id);
+  const userPointsBalance = userCharIds.reduce((sum, id) => sum + (dkp[id] || 0), 0);
+  const metrics = {
+    totalEvents: 12,
+    topBidder: 'PlayerX',
+    pointsBalance: userPointsBalance,
+  };
+
   return (
     <div>
       <h2 className="text-3xl font-bold mb-6">DKP Dashboard</h2>
-      <div className="bg-card rounded-lg p-4 shadow mb-6">
+      <DashboardSummaryCards metrics={metrics} />
+      <DashboardChart />
+      <Card className="mb-6">
         <h3 className="text-xl font-semibold mb-2">Your Characters</h3>
         <ul>
           {safeCharacters.map(char => (
@@ -21,8 +36,10 @@ export default function DKPDashboard({ dkp, characters }) {
             </li>
           ))}
         </ul>
+      </Card>
+      <div className="mt-6">
+        <DKPForm characters={safeCharacters} onSubmit={() => setRefresh(r => !r)} />
       </div>
-      <DKPForm characters={safeCharacters} onSubmit={() => setRefresh(r => !r)} />
       {/* Event Log, etc. will go here */}
     </div>
   );

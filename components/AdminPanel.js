@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import AddEventForm from './AddEventForm';
 import AdminDKPOverride from './AdminDKPOverride';
+import { CustomSelect } from './ui/CustomSelect';
+import AdminClassSelect from './AdminClassSelect';
 
 export default function AdminPanel() {
   const [users, setUsers] = useState([]);
@@ -195,7 +197,7 @@ export default function AdminPanel() {
       <div className="bg-card rounded-lg shadow p-4 md:p-6">
         <h4 className="font-semibold mb-4 text-lg md:text-xl">Manage Classes</h4>
         <form onSubmit={handleAddClass} className="flex flex-col sm:flex-row gap-2 mb-4">
-          <input type="text" value={newClass} onChange={e => setNewClass(e.target.value)} className="bg-background border border-gray-700 rounded p-2 flex-1" placeholder="Add class name" />
+          <input type="text" value={newClass} onChange={e => setNewClass(e.target.value)} className="bg-white text-black border border-gray-700 rounded p-2 flex-1" placeholder="Add class name" />
           <button type="submit" className="bg-accent px-4 py-2 rounded shadow hover:bg-accent/80 transition">Add</button>
         </form>
         <ul className="flex flex-wrap gap-2 mb-2">
@@ -214,7 +216,7 @@ export default function AdminPanel() {
         <form onSubmit={handleAddGuild} className="flex flex-col sm:flex-row md:items-end gap-2 mb-4">
           <div className="flex-1">
             <label className="block mb-1">Add Guild</label>
-            <input type="text" value={guildName} onChange={e => setGuildName(e.target.value)} className="bg-background border border-gray-700 rounded p-2 w-full" placeholder="Guild name" />
+            <input type="text" value={guildName} onChange={e => setGuildName(e.target.value)} className="bg-white text-black border border-gray-700 rounded p-2 w-full" placeholder="Guild name" />
           </div>
           <button type="submit" className="bg-accent px-4 py-2 rounded shadow hover:bg-accent/80 transition">Add</button>
         </form>
@@ -233,7 +235,7 @@ export default function AdminPanel() {
                   <td className="py-2">
                     {editGuildId === guild._id ? (
                       <form onSubmit={handleEditGuildSubmit} className="flex gap-2">
-                        <input type="text" value={editGuildName} onChange={e => setEditGuildName(e.target.value)} className="bg-background border border-gray-700 rounded p-2" />
+                        <input type="text" value={editGuildName} onChange={e => setEditGuildName(e.target.value)} className="bg-white text-black border border-gray-700 rounded p-2" />
                         <button type="submit" className="bg-accent px-2 py-1 rounded">Save</button>
                         <button type="button" className="bg-gray-700 px-2 py-1 rounded" onClick={() => { setEditGuildId(null); setEditGuildName('') }}>Cancel</button>
                       </form>
@@ -304,8 +306,10 @@ export default function AdminPanel() {
             <li key={char._id} className="mb-2 flex flex-col md:flex-row md:items-center md:justify-between gap-2">
               {editCharId === char._id ? (
                 <form onSubmit={handleEditCharSubmit} className="flex gap-2 items-center w-full">
-                  <input value={editCharName} onChange={e => setEditCharName(e.target.value)} className="bg-background border border-gray-700 rounded p-1 w-32" required />
-                  <input value={editCharClass} onChange={e => setEditCharClass(e.target.value)} className="bg-background border border-gray-700 rounded p-1 w-24" required />
+                  <input value={editCharName} onChange={e => setEditCharName(e.target.value)} className="bg-white text-black border border-gray-700 rounded p-1 w-32" required />
+                  <div className="w-32">
+                    <AdminClassSelect value={editCharClass} onChange={setEditCharClass} classes={classes} />
+                  </div>
                   <button type="submit" className="text-green-500 hover:text-green-300">Save</button>
                   <button type="button" onClick={() => setEditCharId(null)} className="text-gray-400 hover:text-gray-200">Cancel</button>
                 </form>

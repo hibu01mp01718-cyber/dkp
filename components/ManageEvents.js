@@ -123,7 +123,7 @@ export default function ManageEvents() {
                     <input
                       value={editName}
                       onChange={e => setEditName(e.target.value)}
-                      className="bg-background border border-gray-700 rounded p-1 w-32"
+                      className="bg-white border border-gray-700 rounded p-1 w-32"
                     />
                   ) : event.name}
                 </td>
@@ -133,7 +133,7 @@ export default function ManageEvents() {
                       type="number"
                       value={editDkp}
                       onChange={e => setEditDkp(e.target.value)}
-                      className="bg-background border border-gray-700 rounded p-1 w-20"
+                      className="bg-white border border-gray-700 rounded p-1 w-20"
                     />
                   ) : event.dkp}
                 </td>
@@ -142,7 +142,7 @@ export default function ManageEvents() {
                     <input
                       value={editDescription}
                       onChange={e => setEditDescription(e.target.value)}
-                      className="bg-background border border-gray-700 rounded p-1 w-40"
+                      className="bg-white border border-gray-700 rounded p-1 w-40"
                     />
                   ) : event.description}
                 </td>
@@ -152,7 +152,7 @@ export default function ManageEvents() {
                       <input
                         value={editPin}
                         onChange={e => setEditPin(e.target.value.replace(/\D/g, '').slice(0,5))}
-                        className="bg-background border border-gray-700 rounded p-1 w-20 font-mono"
+                        className="bg-white border border-gray-700 rounded p-1 w-20 font-mono"
                         placeholder="5-digit PIN"
                         maxLength={5}
                       />

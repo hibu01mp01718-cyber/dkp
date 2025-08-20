@@ -42,7 +42,7 @@ export default function AddEventForm() {
     <form onSubmit={handleSubmit} className="flex flex-col gap-2 md:flex-row md:items-end">
       <input
         type="text"
-        className="bg-background border border-gray-700 rounded p-2 flex-1"
+  className="bg-white text-black border border-gray-700 rounded p-2 flex-1"
         placeholder="Event name"
         value={name}
         onChange={e => setName(e.target.value)}
@@ -50,7 +50,7 @@ export default function AddEventForm() {
       />
       <input
         type="number"
-        className="bg-background border border-gray-700 rounded p-2 w-24"
+  className="bg-white text-black border border-gray-700 rounded p-2 w-24"
         placeholder="DKP"
         value={dkp}
         onChange={e => setDkp(e.target.value)}
@@ -59,7 +59,7 @@ export default function AddEventForm() {
       />
       <input
         type="text"
-        className="bg-background border border-gray-700 rounded p-2 flex-1"
+  className="bg-white text-black border border-gray-700 rounded p-2 flex-1"
         placeholder="Description (optional)"
         value={description}
         onChange={e => setDescription(e.target.value)}

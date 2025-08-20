@@ -1,6 +1,8 @@
 
 import { useState } from 'react'
 import GuildDropdown from './GuildDropdown'
+import { ModernSelect } from './ui/ModernSelect'
+import { Button } from './ui/button'
 
 export default function CharacterForm({ userId, onSubmit, classes }) {
 
@@ -56,24 +58,25 @@ export default function CharacterForm({ userId, onSubmit, classes }) {
       <GuildDropdown value={selectedGuild} onChange={setSelectedGuild} valueType="name" />
       <div className="mb-2">
         <label className="block mb-1">Name</label>
-        <input type="text" value={name} onChange={e => setName(e.target.value)} className="w-full bg-background border border-gray-700 rounded p-2" required />
+  <input type="text" value={name} onChange={e => setName(e.target.value)} className="w-full bg-white text-black border border-gray-700 rounded p-2" required />
       </div>
       <div className="mb-2">
-        <label className="block mb-1">Class</label>
         {Array.isArray(classes) && classes.length > 0 ? (
-          <select value={className} onChange={e => setClassName(e.target.value)} className="w-full bg-background border border-gray-700 rounded p-2" required>
+          <ModernSelect label="Class" value={className} onChange={e => setClassName(e.target.value)} required>
             <option value="" disabled>Select class</option>
             {classes.map(cls => (
               <option key={cls} value={cls}>{cls}</option>
             ))}
-          </select>
+          </ModernSelect>
         ) : (
-          <input type="text" value={className} onChange={e => setClassName(e.target.value)} className="w-full bg-background border border-gray-700 rounded p-2" required />
+          <input type="text" value={className} onChange={e => setClassName(e.target.value)} className="w-full bg-white text-black border border-gray-700 rounded p-2" required />
         )}
       </div>
       {error && <div className="text-red-400 mb-2">{error}</div>}
       {success && <div className="text-green-400 mb-2">{success}</div>}
-      <button type="submit" className="bg-accent px-4 py-2 rounded" disabled={loading}>{loading ? 'Processing...' : 'Create'}</button>
+      <Button type="submit" className="w-full mt-2" disabled={loading}>
+        {loading ? 'Processing...' : 'Create'}
+      </Button>
     </form>
   )
 }
