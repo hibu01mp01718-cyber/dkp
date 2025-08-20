@@ -6,24 +6,23 @@ import clientPromise from '@/lib/mongodb';
 export const authOptions = {
   providers: [
     DiscordProvider({
-      clientId: process.env.DISCORD_CLIENT_ID,
-      clientSecret: process.env.DISCORD_CLIENT_SECRET,
+      clientId: process.env.DISCORD_CLIENT_ID!,
+      clientSecret: process.env.DISCORD_CLIENT_SECRET!,
     }),
   ],
   adapter: MongoDBAdapter(clientPromise),
   session: {
-    strategy: 'jwt',
+    strategy: 'jwt' as const,
   },
   pages: {
     signIn: '/auth/signin',
   },
   callbacks: {
-    async session({ session, token, user }) {
+    async session({ session, token }: any) {
       session.user.id = token.sub;
       return session;
     },
   },
 };
 
-const handler = NextAuth(authOptions);
-export { handler as GET, handler as POST };
+export default NextAuth(authOptions);
