@@ -3,25 +3,46 @@ import { Menu, X, User, LogOut, Sun, Moon, ChevronDown } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from "./ui/button";
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from "./ui/dropdown-menu";
-import ThemeToggle from './ThemeToggle';
+// ...existing code...
 
 export default function Navbar({ user, onLogout }) {
   const [mobileOpen, setMobileOpen] = useState(false);
   return (
-    <nav className="bg-background border-b border-border shadow-sm px-4 py-2 flex items-center justify-between sticky top-0 z-50 w-full">
-      <div className="flex items-center gap-4 min-w-[160px]">
-        <span className="text-xl font-bold tracking-tight select-none">DKP Tracker</span>
-      </div>
-      <div className="flex-1 flex items-center justify-between gap-4">
-        <div className="flex flex-row flex-wrap items-center space-x-4">
-          <a href="/" className="text-base font-semibold py-2 px-3 rounded hover:bg-accent/20 transition block">Dashboard</a>
-          <a href="/characters" className="text-base font-semibold py-2 px-3 rounded hover:bg-accent/20 transition block">Characters</a>
-          <a href="/items" className="text-base font-semibold py-2 px-3 rounded hover:bg-accent/20 transition block">Items</a>
-          <a href="/events" className="text-base font-semibold py-2 px-3 rounded hover:bg-accent/20 transition block">Events</a>
-          <a href="/bids" className="text-base font-semibold py-2 px-3 rounded hover:bg-accent/20 transition block">Bids</a>
+    <nav className="bg-background border-b border-border shadow-md px-4 py-2 w-full">
+      <div className="flex items-center justify-between w-full max-w-7xl mx-auto">
+        {/* Left: App Title */}
+        <div className="flex-1 min-w-0">
+          <span className="text-2xl sm:text-3xl font-bold tracking-tight select-none">DKP Tracker</span>
         </div>
-        <div className="flex items-center gap-2 md:gap-4 ml-2">
-          <ThemeToggle />
+        {/* Center: Nav Links */}
+        <div className="flex-1 flex justify-center">
+          <div className="flex gap-8 p-1 rounded">
+            {[
+              { href: '/', label: 'Dashboard' },
+              { href: '/characters', label: 'Characters' },
+              { href: '/items', label: 'Items' },
+              { href: '/events', label: 'Events' },
+              { href: '/bids', label: 'Bids' },
+            ].map(({ href, label }) => {
+              const isActive = typeof window !== 'undefined' && window.location.pathname === href;
+              return (
+                <a
+                  key={href}
+                  href={href}
+                  className={`mx-2 px-3 py-1.5 rounded-md font-medium text-sm transition-colors duration-150
+                    ${isActive ? 'bg-accent/30 text-accent-foreground shadow-sm' : 'text-muted-foreground hover:bg-accent/10 hover:text-foreground'}
+                    focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/50`
+                  }
+                  style={{ textDecoration: 'none' }}
+                >
+                  {label}
+                </a>
+              );
+            })}
+          </div>
+        </div>
+        {/* Right: user profile (theme toggle removed) */}
+        <div className="flex-1 flex justify-end items-center gap-2 min-w-0">
           {user ? (
             <>
               <div className="flex items-center gap-2 px-2 py-1 rounded-lg bg-card/70 border border-border h-10 min-h-0 shadow-sm">
