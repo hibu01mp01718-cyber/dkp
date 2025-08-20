@@ -1,5 +1,3 @@
-
-
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "./auth/[...nextauth]";
 import clientPromise from '../../lib/mongodb';
@@ -37,9 +35,13 @@ export default async function handler(req, res) {
   }
 
   if (req.method === 'GET') {
-    // Get only characters for the logged-in user
+    // If admin, get all characters; else, only user's characters
+    const adminUser = await db.collection(collections.USERS).findOne({ userId: session.user.id });
+    let query = {};
+    if (!adminUser?.isAdmin) {
+      query.userId = session.user.id;
+    }
     const { guildId } = req.query;
-    let query = { userId: session.user.id };
     if (guildId) query.guildId = guildId;
     console.log('[GET /api/characters] userId:', session.user.id, 'guildId:', guildId);
     const chars = await db.collection(collections.CHARACTERS).find(query).toArray();

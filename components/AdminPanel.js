@@ -26,7 +26,7 @@ export default function AdminPanel() {
     fetch('/api/admin').then(res => res.json()).then(setUsers);
     fetch('/api/characters').then(res => res.json()).then(setCharacters);
     fetch('/api/guilds').then(res => res.json()).then(setGuilds);
-    fetch('/api/classes').then(res => res.json()).then(data => setClasses(data.classes || []));
+    fetch('/api/classes').then(res => res.json()).then(data => setClasses(Array.isArray(data) ? data.map(cls => cls.name) : []));
     fetch('/api/dkp').then(res => res.json()).then(data => {
       const dkpMap = {};
       const byChar = {};
@@ -165,7 +165,7 @@ export default function AdminPanel() {
     const res = await fetch('/api/characters', {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ characterId: editCharId, name: editCharName.trim(), className: editCharClass.trim() }),
+      body: JSON.stringify({ charId: editCharId, name: editCharName.trim(), className: editCharClass.trim() }),
     });
     if (res.ok) {
       setEditCharId(null);
@@ -181,7 +181,7 @@ export default function AdminPanel() {
     const res = await fetch('/api/characters', {
       method: 'DELETE',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ characterId: charId }),
+      body: JSON.stringify({ charId }),
     });
     if (res.ok) {
       fetch('/api/characters').then(res => res.json()).then(setCharacters);

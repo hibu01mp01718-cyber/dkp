@@ -9,7 +9,7 @@ export default function Navbar({ user, onLogout }) {
       <div>
         <div className="flex items-center gap-2 mb-8">
           {/* You can replace this with a logo if you have one */}
-          <span className="text-2xl font-bold tracking-tight select-none">DKP Tracker</span>
+          <span className="font-extrabold tracking-tight select-none" style={{ fontSize: '18px', lineHeight: '1.1' }}>DKP Tracker</span>
         </div>
         {/* Nav Links */}
         <div className="flex flex-col gap-2">
@@ -19,6 +19,7 @@ export default function Navbar({ user, onLogout }) {
             { href: '/items', label: 'Items' },
             { href: '/events', label: 'Events' },
             { href: '/bids', label: 'Bids' },
+            { href: '/leaderboard', label: 'Leaderboard' },
           ].map(({ href, label }) => {
             const isActive = typeof window !== 'undefined' && window.location.pathname === href;
             return (

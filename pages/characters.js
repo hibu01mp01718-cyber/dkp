@@ -39,7 +39,7 @@ export default function CharactersPage() {
           </div>
         )}
         <div className="bg-card rounded-2xl shadow-lg p-4 md:p-6">
-          <CharacterList characters={characters} />
+          <CharacterList characters={characters.filter(c => c.userId === session?.user?.id)} />
         </div>
       </div>
     </Layout>
