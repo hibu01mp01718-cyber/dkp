@@ -1,0 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+
+html, body {
+  background: linear-gradient(135deg, #18181b 0%, #23272f 100%);
+  color: #fff;
+  font-family: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  min-height: 100vh;
+}
+
+.glass {
+  background: rgba(36, 39, 48, 0.7);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  border-radius: 1.25rem;
+  border: 1px solid #2e323c;
+  backdrop-filter: blur(8px);
+}
