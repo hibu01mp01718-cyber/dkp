@@ -1,30 +1,15 @@
-import Layout from '../components/Layout'
-import AdminPanel from '../components/AdminPanel'
-import { useSession } from 'next-auth/react'
-import { useEffect, useState } from 'react'
+import Layout from '../components/Layout';
+import AdminPanel from '../components/AdminPanel';
+import { useSession } from 'next-auth/react';
 
 export default function AdminPage() {
-  const { data: session } = useSession()
-  const [isAdmin, setIsAdmin] = useState(false)
-  const [loading, setLoading] = useState(true)
+  const { data: session, status } = useSession();
 
-  useEffect(() => {
-    if (!session) return
-    // Check if user is admin (no guildId)
-    fetch('/api/admin')
-      .then(res => res.json())
-      .then(users => {
-        const user = users.find(u => u.userId === session.user.id)
-        setIsAdmin(user?.isAdmin)
-        setLoading(false)
-      })
-  }, [session])
-
-  if (!session || loading) return <Layout><div>Loading...</div></Layout>
-  if (!isAdmin) return <Layout><div className="text-red-400">Access denied. Admins only.</div></Layout>
+  if (status === 'loading') return <Layout><div>Loading...</div></Layout>;
+  if (!session?.user?.isAdmin) return <Layout><div className="text-red-400 font-bold text-xl text-center py-8">Access Denied: Admins Only</div></Layout>;
   return (
     <Layout>
       <AdminPanel />
     </Layout>
-  )
+  );
 }
