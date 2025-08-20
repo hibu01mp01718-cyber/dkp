@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
+import { useSession } from 'next-auth/react';
 import AddEventForm from './AddEventForm';
 
 export default function ManageEvents() {
+  const { data: session } = useSession();
   const [events, setEvents] = useState([]);
   const [editId, setEditId] = useState(null);
   const [editName, setEditName] = useState('');
@@ -100,7 +102,7 @@ export default function ManageEvents() {
     <div className="w-full max-w-3xl mx-auto px-2 sm:px-4 md:px-8 py-4">
       <h2 className="text-2xl font-bold mb-6">Manage Events</h2>
       <div className="mb-6">
-        <AddEventForm />
+        <AddEventForm onEventAdded={fetchEvents} />
       </div>
       {error && <div className="text-red-400 mb-2">{error}</div>}
       {success && <div className="text-green-400 mb-2">{success}</div>}
@@ -168,32 +170,34 @@ export default function ManageEvents() {
                   )}
                 </td>
                 <td className="py-2">
-                  {editId === event._id ? (
-                    <>
-                      <button
-                        className="bg-accent px-2 py-1 rounded mr-2 hover:bg-accent/80 transition"
-                        onClick={handleEditSubmit}
-                        disabled={loading}
-                      >Save</button>
-                      <button
-                        className="bg-gray-700 px-2 py-1 rounded hover:bg-gray-600 transition"
-                        onClick={() => setEditId(null)}
-                        disabled={loading}
-                      >Cancel</button>
-                    </>
-                  ) : (
-                    <>
-                      <button
-                        className="bg-accent px-2 py-1 rounded mr-2 hover:bg-accent/80 transition"
-                        onClick={() => handleEdit(event)}
-                        disabled={loading}
-                      >Edit</button>
-                      <button
-                        className="bg-red-700 px-2 py-1 rounded hover:bg-red-600 transition"
-                        onClick={() => handleDelete(event._id)}
-                        disabled={loading}
-                      >Delete</button>
-                    </>
+                  {session?.user?.isAdmin && (
+                    editId === event._id ? (
+                      <>
+                        <button
+                          className="bg-accent px-2 py-1 rounded mr-2 hover:bg-accent/80 transition"
+                          onClick={handleEditSubmit}
+                          disabled={loading}
+                        >Save</button>
+                        <button
+                          className="bg-gray-700 px-2 py-1 rounded hover:bg-gray-600 transition"
+                          onClick={() => setEditId(null)}
+                          disabled={loading}
+                        >Cancel</button>
+                      </>
+                    ) : (
+                      <>
+                        <button
+                          className="bg-accent px-2 py-1 rounded mr-2 hover:bg-accent/80 transition"
+                          onClick={() => handleEdit(event)}
+                          disabled={loading}
+                        >Edit</button>
+                        <button
+                          className="bg-red-700 px-2 py-1 rounded hover:bg-red-600 transition"
+                          onClick={() => handleDelete(event._id)}
+                          disabled={loading}
+                        >Delete</button>
+                      </>
+                    )
                   )}
                 </td>
               </tr>

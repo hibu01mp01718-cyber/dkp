@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-export default function AddEventForm() {
+export default function AddEventForm({ onEventAdded }) {
   const [name, setName] = useState('');
   const [dkp, setDkp] = useState('');
   const [description, setDescription] = useState('');
@@ -28,6 +28,7 @@ export default function AddEventForm() {
         setName('');
         setDkp('');
         setDescription('');
+        if (onEventAdded) onEventAdded();
       } else {
         const data = await res.json().catch(() => ({}));
         setError(data.error || 'Failed to add event.');
