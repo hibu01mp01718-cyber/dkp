@@ -15,7 +15,7 @@ export default function Layout({ children }) {
   return (
     <div className="flex min-h-screen bg-gradient-to-br from-gray-900 via-gray-950 to-gray-900 text-white font-sans">
       {/* Sidebar - responsive */}
-      <aside className="fixed top-0 left-0 h-full w-64 md:w-72 bg-gray-800/90 backdrop-blur-lg shadow-xl flex flex-col z-40 transition-transform duration-300 md:translate-x-0 -translate-x-full md:relative md:translate-x-0 border-r border-border" id="sidebar">
+  <aside className="fixed top-0 left-0 h-full w-64 md:w-72 bg-gray-800 shadow-xl flex flex-col z-40 transition-transform duration-300 md:translate-x-0 -translate-x-full md:relative md:translate-x-0 border-r border-border" id="sidebar">
         <div>
           <div className="flex items-center justify-between px-2 py-6 border-b border-gray-700">
             <span className="text-2xl font-bold tracking-tight text-accent">DKP Tracker</span>
