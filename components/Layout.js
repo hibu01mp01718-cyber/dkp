@@ -7,7 +7,7 @@ export default function Layout({ children }) {
   const { data: session } = useSession();
   return (
     <div className={styles.mainContainer}>
-      <Navbar user={session?.user} onLogout={signOut} />
+  <Navbar user={session?.user} onLogout={signOut} />
       <main className={styles.bodyContent}>
         {children}
       </main>
