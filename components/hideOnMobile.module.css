@@ -1,0 +1,8 @@
+.hideOnMobile {
+  display: inline;
+}
+@media (max-width: 600px) {
+  .hideOnMobile {
+    display: none;
+  }
+}

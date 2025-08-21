@@ -3,8 +3,10 @@ import React from 'react';
 import { useSession } from 'next-auth/react';
 import DKPForm from './DKPForm';
 import DashboardSummaryCards from './DashboardSummaryCards';
-import DashboardChart from './DashboardChart';
+
 import Card from './Card';
+import styles from './DKPDashboard.module.css';
+
 
 export default function DKPDashboard({ dkp, characters }) {
   const { data: session } = useSession();
@@ -21,25 +23,30 @@ export default function DKPDashboard({ dkp, characters }) {
   };
 
   return (
-  <div className="ml-8 sm:ml-16">
-      <h2 className="text-3xl font-bold mb-6">DKP Dashboard</h2>
-      <DashboardSummaryCards metrics={metrics} />
-      <DashboardChart />
-      <Card className="mb-6">
-        <h3 className="text-xl font-semibold mb-2">Your Characters</h3>
-        <ul>
+    <section className={styles.dashboardSection}>
+      <div className={styles.dashboardCard}>
+        <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">Welcome{session?.user?.name ? `, ${session.user.name}` : ''}</h1>
+        <p className="text-muted-foreground text-base">Track your DKP, manage your characters, and view your progress.</p>
+      </div>
+
+  <Card className={styles.dashboardCard + ' ' + styles.dashboardCardPadded}>
+        <h2 className="text-lg font-semibold mb-4">Your Characters</h2>
+        <ul className="divide-y divide-border">
+          {userCharacters.length === 0 && (
+            <li className="py-4 text-muted-foreground text-center">No characters found.</li>
+          )}
           {userCharacters.map(char => (
-            <li key={char._id} className="mb-2 flex justify-between items-center">
-              <span>{char.name} <span className="text-sm text-gray-400">({char.className})</span></span>
-              <span className="font-mono">{dkp[char._id] || 0} DKP</span>
+            <li key={char._id} className="py-3 flex justify-between items-center">
+              <span className="font-medium">{char.name} <span className="text-sm text-muted-foreground">({char.className})</span></span>
+              <span className="font-mono text-accent font-semibold">{dkp[char._id] || 0} DKP</span>
             </li>
           ))}
         </ul>
       </Card>
-      <div className="mt-6">
+      <div className={styles.dashboardCard}>
         <DKPForm characters={userCharacters} onSubmit={() => setRefresh(r => !r)} />
       </div>
       {/* Event Log, etc. will go here */}
-    </div>
+    </section>
   );
 }

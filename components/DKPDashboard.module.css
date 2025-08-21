@@ -1,0 +1,15 @@
+.dashboardSection {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.dashboardCard {
+  margin-bottom: 0 !important;
+  padding: 2rem 1.5rem 1.5rem 1.5rem;
+}
+
+/* Override Card padding for Your Characters section */
+.yourCharactersCard {
+  padding: 2rem 1.5rem 1.5rem 1.5rem !important;
+}

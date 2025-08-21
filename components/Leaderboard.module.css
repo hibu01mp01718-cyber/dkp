@@ -1,0 +1,28 @@
+.leaderboardTableWrapper {
+  padding: 2rem 1.5rem 1.5rem 1.5rem;
+  background: #23272f;
+  border-radius: 16px;
+  box-shadow: 0 2px 12px 0 rgba(0,0,0,0.10);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+  max-width: 600px;
+}
+
+.leaderboardTable {
+  width: 100%;
+  background: transparent;
+  border-radius: 12px;
+  color: #fff;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.leaderboardTable tr {
+  transition: background 0.2s;
+}
+
+.leaderboardTable tbody tr:hover {
+  background: #31343c;
+}

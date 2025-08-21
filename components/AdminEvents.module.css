@@ -1,0 +1,42 @@
+.adminEventsSection {
+  width: 100%;
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 2.5rem 1.5rem 1.5rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  background: #23272f;
+  border-radius: 16px;
+  box-shadow: 0 2px 12px 0 rgba(0,0,0,0.10);
+}
+
+.adminEventsTitle {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: #fff;
+}
+
+.adminEventsList {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.adminEventCard {
+  background: #18181b;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 1px 6px 0 rgba(0,0,0,0.08);
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.adminEventActions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}

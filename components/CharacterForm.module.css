@@ -1,0 +1,65 @@
+.formContainer {
+  background: #23272f;
+  border-radius: 12px;
+  padding: 2rem 1.5rem 1.5rem 1.5rem;
+  box-shadow: 0 2px 12px 0 rgba(0,0,0,0.10);
+  margin-bottom: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  max-width: 100%;
+}
+
+.formTitle {
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  color: #fff;
+}
+
+.formField {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.formInput, .formSelect {
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
+  border: 1px solid #2e323c;
+  background: #18181b;
+  color: #fff;
+  font-size: 1rem;
+}
+
+.formInput:focus, .formSelect:focus {
+  outline: 2px solid #7f5af0;
+}
+
+.formButton {
+  background: #7f5af0;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.formButton:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.formError {
+  color: #ff4d4f;
+  margin-bottom: 0.5rem;
+}
+
+.formSuccess {
+  color: #4ade80;
+  margin-bottom: 0.5rem;
+}

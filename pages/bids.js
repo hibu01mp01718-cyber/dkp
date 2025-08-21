@@ -1,8 +1,10 @@
+
 import Layout from '../components/Layout'
 import BidList from '../components/BidList'
 import BidForm from '../components/BidForm'
 import { useSession } from 'next-auth/react'
 import { useEffect, useState } from 'react'
+import styles from '../components/PageSection.module.css';
 
 export default function BidsPage() {
   const { data: session } = useSession()
@@ -26,8 +28,10 @@ export default function BidsPage() {
 
   return (
     <Layout>
-      <BidForm items={items} characters={characters} guildId={session?.guildId} onSubmit={() => setRefresh(r => !r)} />
-      <BidList bids={bids} />
+      <section className={styles.pageSection}>
+        <BidForm items={items} characters={characters} guildId={session?.guildId} onSubmit={() => setRefresh(r => !r)} />
+        <BidList bids={bids} />
+      </section>
     </Layout>
   )
 }

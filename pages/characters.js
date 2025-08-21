@@ -1,5 +1,11 @@
 
-
+import { useSession } from 'next-auth/react';
+import { useEffect, useState } from 'react';
+import Layout from '../components/Layout';
+import CharacterList from '../components/CharacterList';
+import CharacterForm from '../components/CharacterForm';
+import GuildDropdown from '../components/GuildDropdown';
+import styles from '../components/PageSection.module.css';
 
 export default function CharactersPage() {
   const { data: session, status } = useSession();
@@ -19,7 +25,6 @@ export default function CharactersPage() {
       .catch(() => setCharacters([]));
   }, [refresh]);
 
-  // Load classes from database
   useEffect(() => {
     fetch('/api/classes')
       .then(res => res.json())
@@ -28,9 +33,13 @@ export default function CharactersPage() {
 
   return (
     <Layout>
-      <div className="w-full max-w-4xl mx-auto px-2 sm:px-4 md:px-8 py-4 flex flex-col gap-6">
+      <section className={styles.pageSection}>
+        <div>
+          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">Your Characters</h1>
+          <p className="text-muted-foreground text-base">Create and manage your characters for DKP tracking.</p>
+        </div>
         {status === "authenticated" && (
-          <div className="bg-card rounded-2xl shadow-lg p-4 md:p-6 mb-4">
+          <div>
             <CharacterForm
               userId={session?.user?.id}
               onSubmit={() => setRefresh(r => !r)}
@@ -38,20 +47,10 @@ export default function CharactersPage() {
             />
           </div>
         )}
-        <div className="bg-card rounded-2xl shadow-lg p-4 md:p-6">
-          <CharacterList characters={characters.filter(c => c.userId === session?.user?.id)} />
-        </div>
-      </div>
+        <CharacterList characters={characters.filter(c => c.userId === session?.user?.id)} />
+      </section>
     </Layout>
   );
 }
-
-
-import { useSession } from 'next-auth/react';
-import { useEffect, useState } from 'react';
-import Layout from '../components/Layout';
-import CharacterList from '../components/CharacterList';
-import CharacterForm from '../components/CharacterForm';
-import GuildDropdown from '../components/GuildDropdown';
 
 

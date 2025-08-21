@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Layout from '../components/Layout';
+import leaderboardStyles from '../components/Leaderboard.module.css';
+import styles from '../components/PageSection.module.css';
 
 export default function Leaderboard() {
   const [characters, setCharacters] = useState([]);
@@ -41,38 +43,37 @@ export default function Leaderboard() {
 
   return (
     <Layout>
-      <div className="max-w-2xl mx-auto py-8 px-2 sm:px-4 w-full">
-        <h2 className="text-2xl font-bold mb-6 text-center">DKP Leaderboard</h2>
+      <section className={styles.pageSection + ' ' + styles.pageSectionCentered}>
+        <div>
+          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">DKP Leaderboard</h1>
+        </div>
         {loading ? (
-          <div className="text-center">Loading...</div>
+          <div>Loading...</div>
         ) : (
-          <div className="overflow-x-auto rounded-lg shadow">
-            <table className="w-full bg-card rounded-lg min-w-[400px]">
+          <div className={leaderboardStyles.leaderboardTableWrapper}>
+            <table className={leaderboardStyles.leaderboardTable}>
               <thead>
                 <tr>
-                  <th className="py-2 px-2 sm:px-4 text-left">Rank</th>
-                  <th className="py-2 px-2 sm:px-4 text-left">Character</th>
-                  <th className="py-2 px-2 sm:px-4 text-left">Class</th>
-                  <th className="py-2 px-2 sm:px-4 text-left">DKP</th>
+                  <th>Rank</th>
+                  <th>Character</th>
+                  <th>Class</th>
+                  <th>DKP</th>
                 </tr>
               </thead>
               <tbody>
                 {leaderboard.map((char, idx) => (
-                  <tr
-                    key={char._id}
-                    className={`transition-colors ${idx % 2 === 0 ? 'bg-gray-800' : 'bg-gray-700'} hover:bg-accent/40`}
-                  >
-                    <td className="py-2 px-2 sm:px-4 font-bold">{idx + 1}</td>
-                    <td className="py-2 px-2 sm:px-4">{char.name}</td>
-                    <td className="py-2 px-2 sm:px-4">{char.className}</td>
-                    <td className="py-2 px-2 sm:px-4">{char.dkp}</td>
+                  <tr key={char._id || idx}>
+                    <td>{idx + 1}</td>
+                    <td>{char.name}</td>
+                    <td>{char.className}</td>
+                    <td>{char.dkp}</td>
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
         )}
-      </div>
+      </section>
     </Layout>
   );
 }

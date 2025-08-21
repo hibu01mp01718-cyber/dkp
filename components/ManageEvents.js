@@ -1,6 +1,9 @@
+
 import React, { useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
 import AddEventForm from './AddEventForm';
+import adminEventsStyles from './AdminEvents.module.css';
+import buttonStyles from './AdminEventButton.module.css';
 
 export default function ManageEvents() {
   const { data: session } = useSession();
@@ -99,104 +102,107 @@ export default function ManageEvents() {
   };
 
   return (
-    <div className="w-full max-w-3xl mx-auto px-2 sm:px-4 md:px-8 py-4">
-      <h2 className="text-2xl font-bold mb-6">Manage Events</h2>
-      <div className="mb-6">
+    <div>
+      <div style={{ marginBottom: '2rem' }}>
         <AddEventForm onEventAdded={fetchEvents} />
       </div>
       {error && <div className="text-red-400 mb-2">{error}</div>}
       {success && <div className="text-green-400 mb-2">{success}</div>}
-      <div className="bg-card rounded-lg shadow p-4 md:p-6">
-        <table className="w-full text-left mb-2">
+      <div style={{ marginTop: '2rem' }}>
+        <table style={{ width: '100%', borderCollapse: 'separate', borderSpacing: 0, background: '#23272f', borderRadius: 12, overflow: 'hidden' }}>
           <thead>
-            <tr>
-              <th className="py-2">Name</th>
-              <th className="py-2">DKP</th>
-              <th className="py-2">Description</th>
-              <th className="py-2">PIN</th>
-              <th className="py-2">Actions</th>
+            <tr style={{ background: '#18181b' }}>
+              <th style={{ padding: '0.75rem 1rem', color: '#fff', fontWeight: 600 }}>Name</th>
+              <th style={{ padding: '0.75rem 1rem', color: '#fff', fontWeight: 600 }}>DKP</th>
+              <th style={{ padding: '0.75rem 1rem', color: '#fff', fontWeight: 600 }}>Description</th>
+              <th style={{ padding: '0.75rem 1rem', color: '#fff', fontWeight: 600 }}>PIN</th>
+              <th style={{ padding: '0.75rem 1rem', color: '#fff', fontWeight: 600 }}>Actions</th>
             </tr>
           </thead>
           <tbody>
             {events.map(event => (
-              <tr key={event._id}>
-                <td className="py-2">
+              <tr key={event._id} style={{ borderBottom: '1px solid #2e323c' }}>
+                <td style={{ padding: '0.75rem 1rem' }}>
                   {editId === event._id ? (
                     <input
                       value={editName}
                       onChange={e => setEditName(e.target.value)}
-                      className="bg-white border border-gray-700 rounded p-1 w-32"
+                      className={adminEventsStyles.adminEventInput}
+                      style={{ width: 120 }}
                     />
                   ) : event.name}
                 </td>
-                <td className="py-2">
+                <td style={{ padding: '0.75rem 1rem' }}>
                   {editId === event._id ? (
                     <input
                       type="number"
                       value={editDkp}
                       onChange={e => setEditDkp(e.target.value)}
-                      className="bg-white border border-gray-700 rounded p-1 w-20"
+                      className={adminEventsStyles.adminEventInput}
+                      style={{ width: 70 }}
                     />
                   ) : event.dkp}
                 </td>
-                <td className="py-2">
+                <td style={{ padding: '0.75rem 1rem' }}>
                   {editId === event._id ? (
                     <input
                       value={editDescription}
                       onChange={e => setEditDescription(e.target.value)}
-                      className="bg-white border border-gray-700 rounded p-1 w-40"
+                      className={adminEventsStyles.adminEventInput}
+                      style={{ width: 180 }}
                     />
                   ) : event.description}
                 </td>
-                <td className="py-2">
+                <td style={{ padding: '0.75rem 1rem' }}>
                   {editId === event._id ? (
-                    <div className="flex gap-2 items-center">
+                    <span style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
                       <input
                         value={editPin}
                         onChange={e => setEditPin(e.target.value.replace(/\D/g, '').slice(0,5))}
-                        className="bg-white border border-gray-700 rounded p-1 w-20 font-mono"
+                        className={adminEventsStyles.adminEventInput}
+                        style={{ width: 70, fontFamily: 'monospace' }}
                         placeholder="5-digit PIN"
                         maxLength={5}
                       />
                       <button
                         type="button"
-                        className="bg-accent px-2 py-1 rounded hover:bg-accent/80 transition"
+                        className={buttonStyles.adminEventButton}
                         onClick={handleGeneratePin}
                         disabled={loading}
                       >Generate</button>
-                    </div>
+                    </span>
                   ) : (
-                    <span className="font-mono text-lg tracking-widest">{event.pin || <span className="text-gray-500">-</span>}</span>
+                    <span style={{ fontFamily: 'monospace', fontSize: 16, letterSpacing: 2 }}>{event.pin || <span style={{ color: '#888' }}>-</span>}</span>
                   )}
                 </td>
-                <td className="py-2">
+                <td style={{ padding: '0.75rem 1rem', verticalAlign: 'middle' }}>
                   {session?.user?.isAdmin && (
                     editId === event._id ? (
-                      <>
+                      <span style={{ display: 'flex', gap: '0.5rem' }}>
                         <button
-                          className="bg-accent px-2 py-1 rounded mr-2 hover:bg-accent/80 transition"
+                          className={buttonStyles.adminEventButton}
                           onClick={handleEditSubmit}
                           disabled={loading}
                         >Save</button>
                         <button
-                          className="bg-gray-700 px-2 py-1 rounded hover:bg-gray-600 transition"
+                          className={buttonStyles.adminEventButton}
                           onClick={() => setEditId(null)}
                           disabled={loading}
                         >Cancel</button>
-                      </>
+                      </span>
                     ) : (
-                      <>
+                      <span style={{ display: 'flex', gap: '0.5rem' }}>
                         <button
-                          className="bg-accent px-2 py-1 rounded mr-2 hover:bg-accent/80 transition"
+                          className={buttonStyles.adminEventButton}
                           onClick={() => handleEdit(event)}
                           disabled={loading}
                         >Edit</button>
                         <button
-                          className="bg-red-700 px-2 py-1 rounded hover:bg-red-600 transition"
+                          className={`${buttonStyles.adminEventButton} ${buttonStyles.delete}`}
                           onClick={() => handleDelete(event._id)}
                           disabled={loading}
                         >Delete</button>
-                      </>
+                      </span>
                     )
                   )}
                 </td>
@@ -204,7 +210,7 @@ export default function ManageEvents() {
             ))}
           </tbody>
         </table>
-        {events.length === 0 && <div className="text-gray-400">No events found.</div>}
+        {events.length === 0 && <div style={{ color: '#888' }}>No events found.</div>}
       </div>
     </div>
   );

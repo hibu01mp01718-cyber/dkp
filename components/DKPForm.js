@@ -1,5 +1,7 @@
+
 import { useState, useEffect } from 'react';
 import { CustomSelect } from './ui/CustomSelect';
+import styles from './DKPForm.module.css';
 
 export default function DKPForm({ characters, onSubmit }) {
   const [characterId, setCharacterId] = useState(characters && characters.length > 0 ? characters[0]._id : '');
@@ -64,35 +66,46 @@ export default function DKPForm({ characters, onSubmit }) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="bg-card rounded-lg p-4 shadow mb-6">
-      <h3 className="text-lg font-semibold mb-2">Add/Remove DKP</h3>
-      <CustomSelect
-        label="Character"
-        value={characterId}
-        onChange={setCharacterId}
-        options={[
-          { value: '', label: 'Select character' },
-          ...characters.map(char => ({ value: char._id, label: char.name }))
-        ]}
-      />
-      <CustomSelect
-        label="Event Name"
-        value={eventName}
-        onChange={setEventName}
-        options={[
-          { value: '', label: 'Select event' },
-          ...events.map(ev => ({ value: ev.name, label: `${ev.name} (${ev.dkp} DKP)` }))
-        ]}
-      />
-      <div className="mb-2">
-        <label className="block mb-1">PIN</label>
-  <input type="password" value={pin} onChange={e => setPin(e.target.value)} className="w-full bg-white text-black border border-gray-700 rounded p-2" required />
+    <form onSubmit={handleSubmit} className={styles.formContainer}>
+      <h3 className={styles.formTitle}>Add/Remove DKP</h3>
+      <div className={styles.formField}>
+        <CustomSelect
+          label="Character"
+          value={characterId}
+          onChange={setCharacterId}
+          options={[
+            { value: '', label: 'Select character' },
+            ...characters.map(char => ({ value: char._id, label: char.name }))
+          ]}
+        />
       </div>
-      {error && <div className="text-red-400 mb-2">{error}</div>}
-      {success && <div className="text-green-400 mb-2">{success}</div>}
+      <div className={styles.formField}>
+        <CustomSelect
+          label="Event Name"
+          value={eventName}
+          onChange={setEventName}
+          options={[
+            { value: '', label: 'Select event' },
+            ...events.map(ev => ({ value: ev.name, label: `${ev.name} (${ev.dkp} DKP)` }))
+          ]}
+        />
+      </div>
+      <div className={styles.formField}>
+        <label htmlFor="dkp-pin">PIN</label>
+        <input
+          id="dkp-pin"
+          type="password"
+          value={pin}
+          onChange={e => setPin(e.target.value)}
+          className={styles.formInput}
+          required
+        />
+      </div>
+      {error && <div className={styles.formError}>{error}</div>}
+      {success && <div className={styles.formSuccess}>{success}</div>}
       <button
         type="submit"
-        className="bg-[#5865F2] hover:bg-[#4752c4] text-white px-6 py-2 rounded-lg font-semibold text-base transition mb-2 w-full max-w-xs mx-auto block"
+        className={styles.formButton}
         disabled={loading}
       >
         {loading ? 'Processing...' : 'Submit'}

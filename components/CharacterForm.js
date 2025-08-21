@@ -1,8 +1,10 @@
 
+
 import { useState } from 'react'
 import GuildDropdown from './GuildDropdown'
 import { ModernSelect } from './ui/ModernSelect'
 import { Button } from './ui/button'
+import styles from './CharacterForm.module.css';
 
 export default function CharacterForm({ userId, onSubmit, classes }) {
 
@@ -53,14 +55,16 @@ export default function CharacterForm({ userId, onSubmit, classes }) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="bg-card rounded-lg p-4 shadow mb-6">
-      <h3 className="text-lg font-semibold mb-2">Create Character</h3>
-      <GuildDropdown value={selectedGuild} onChange={setSelectedGuild} valueType="name" />
-      <div className="mb-2">
-        <label className="block mb-1">Name</label>
-  <input type="text" value={name} onChange={e => setName(e.target.value)} className="w-full bg-white text-black border border-gray-700 rounded p-2" required />
+    <form onSubmit={handleSubmit} className={styles.formContainer}>
+      <h3 className={styles.formTitle}>Create Character</h3>
+      <div className={styles.formField}>
+        <GuildDropdown value={selectedGuild} onChange={setSelectedGuild} valueType="name" />
       </div>
-      <div className="mb-2">
+      <div className={styles.formField}>
+        <label>Name</label>
+        <input type="text" value={name} onChange={e => setName(e.target.value)} className={styles.formInput} required />
+      </div>
+      <div className={styles.formField}>
         {Array.isArray(classes) && classes.length > 0 ? (
           <ModernSelect label="Class" value={className} onChange={e => setClassName(e.target.value)} required>
             <option value="" disabled>Select class</option>
@@ -69,14 +73,18 @@ export default function CharacterForm({ userId, onSubmit, classes }) {
             ))}
           </ModernSelect>
         ) : (
-          <input type="text" value={className} onChange={e => setClassName(e.target.value)} className="w-full bg-white text-black border border-gray-700 rounded p-2" required />
+          <input type="text" value={className} onChange={e => setClassName(e.target.value)} className={styles.formInput} required />
         )}
       </div>
-      {error && <div className="text-red-400 mb-2">{error}</div>}
-      {success && <div className="text-green-400 mb-2">{success}</div>}
-      <Button type="submit" className="w-full mt-2" disabled={loading}>
+      {error && <div className={styles.formError}>{error}</div>}
+      {success && <div className={styles.formSuccess}>{success}</div>}
+      <button
+        type="submit"
+        className={styles.formButton}
+        disabled={loading}
+      >
         {loading ? 'Processing...' : 'Create'}
-      </Button>
+      </button>
     </form>
   )
 }

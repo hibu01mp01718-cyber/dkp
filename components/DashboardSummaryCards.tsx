@@ -26,7 +26,7 @@ function StatCard({ icon, label, value, trend, trendLabel, accent = '' }) {
 export default function DashboardSummaryCards({ metrics }) {
   // Example trend data for demo
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-4 mb-8">
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-6 mb-8">
       <StatCard
         icon={<Star className="text-accent" size={28} />}
         label="Total DKP Points"
@@ -34,6 +34,7 @@ export default function DashboardSummaryCards({ metrics }) {
         trend={+1.2}
         trendLabel="vs. previous week"
       />
+      {/* Add more StatCards here for other metrics if needed */}
     </div>
   );
 }

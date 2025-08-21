@@ -1,7 +1,9 @@
+
 import Layout from '../components/Layout'
 import ItemList from '../components/ItemList'
 import { useSession } from 'next-auth/react'
 import { useEffect, useState } from 'react'
+import styles from '../components/PageSection.module.css';
 
 export default function ItemsPage() {
   const { data: session } = useSession()
@@ -16,7 +18,9 @@ export default function ItemsPage() {
 
   return (
     <Layout>
-      <ItemList items={items} />
+      <section className={styles.pageSection}>
+        <ItemList items={items} />
+      </section>
     </Layout>
   )
 }

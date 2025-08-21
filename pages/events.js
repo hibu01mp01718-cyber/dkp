@@ -1,7 +1,9 @@
+
 import Layout from '../components/Layout'
 import EventLog from '../components/EventLog'
 import { useSession } from 'next-auth/react'
 import { useEffect, useState } from 'react'
+import styles from '../components/PageSection.module.css';
 
 export default function EventsPage() {
   const { data: session } = useSession()
@@ -16,7 +18,9 @@ export default function EventsPage() {
 
   return (
     <Layout>
-      <EventLog events={events} />
+      <section className={styles.pageSection}>
+        <EventLog events={events} />
+      </section>
     </Layout>
   )
 }

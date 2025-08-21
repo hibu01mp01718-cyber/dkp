@@ -1,4 +1,6 @@
+
 import React, { useState } from 'react';
+import styles from './AddEventForm.module.css';
 
 export default function AddEventForm({ onEventAdded }) {
   const [name, setName] = useState('');
@@ -40,40 +42,50 @@ export default function AddEventForm({ onEventAdded }) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-2 md:flex-row md:items-end">
-      <input
-        type="text"
-  className="bg-white text-black border border-gray-700 rounded p-2 flex-1"
-        placeholder="Event name"
-        value={name}
-        onChange={e => setName(e.target.value)}
-        required
-      />
-      <input
-        type="number"
-  className="bg-white text-black border border-gray-700 rounded p-2 w-24"
-        placeholder="DKP"
-        value={dkp}
-        onChange={e => setDkp(e.target.value)}
-        required
-        min="0"
-      />
-      <input
-        type="text"
-  className="bg-white text-black border border-gray-700 rounded p-2 flex-1"
-        placeholder="Description (optional)"
-        value={description}
-        onChange={e => setDescription(e.target.value)}
-      />
+    <form onSubmit={handleSubmit} className={styles.formContainer}>
+      <h3 className={styles.formTitle}>Add Event</h3>
+      <div className={styles.formField}>
+        <label>Event Name</label>
+        <input
+          type="text"
+          className={styles.formInput}
+          placeholder="Event name"
+          value={name}
+          onChange={e => setName(e.target.value)}
+          required
+        />
+      </div>
+      <div className={styles.formField}>
+        <label>DKP</label>
+        <input
+          type="number"
+          className={styles.formInput}
+          placeholder="DKP"
+          value={dkp}
+          onChange={e => setDkp(e.target.value)}
+          required
+          min="0"
+        />
+      </div>
+      <div className={styles.formField}>
+        <label>Description</label>
+        <input
+          type="text"
+          className={styles.formInput}
+          placeholder="Description (optional)"
+          value={description}
+          onChange={e => setDescription(e.target.value)}
+        />
+      </div>
+      {error && <div className={styles.formError}>{error}</div>}
+      {success && <div className={styles.formSuccess}>{success}</div>}
       <button
         type="submit"
-        className="bg-accent px-4 py-2 rounded shadow hover:bg-accent/80 transition min-w-[100px]"
+        className={styles.formButton}
         disabled={loading}
       >
         {loading ? 'Adding...' : 'Add Event'}
       </button>
-      {error && <div className="text-red-400 text-sm mt-2 md:ml-4">{error}</div>}
-      {success && <div className="text-green-400 text-sm mt-2 md:ml-4">{success}</div>}
     </form>
   );
 }
