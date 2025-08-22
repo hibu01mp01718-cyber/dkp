@@ -11,7 +11,8 @@ export default function Leaderboard() {
   useEffect(() => {
     async function fetchData() {
       setLoading(true);
-      const charsRes = await fetch('/api/characters');
+      // Use the special endpoint for all characters (leaderboard only)
+      const charsRes = await fetch('/api/all-characters');
       const chars = await charsRes.json();
       const dkpRes = await fetch('/api/dkp');
       const dkpData = await dkpRes.json();

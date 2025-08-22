@@ -37,16 +37,12 @@ export default function DKPDashboard({ dkp, characters }) {
           {userCharacters.map(char => (
             <li
               key={char._id}
-              className="py-3 grid grid-cols-3 items-center gap-2"
+              className="py-3 flex flex-col items-center text-center"
               style={{ minWidth: 0 }}
             >
-              <span className="font-medium truncate flex items-center">
-                {char.name}
-                <span className="ml-2 text-sm text-muted-foreground">({char.className})</span>
-              </span>
-              <span className="font-mono text-accent font-semibold text-lg md:text-xl text-right">
-                {dkp[char._id] || 0} DKP
-              </span>
+              <span className="font-bold text-lg md:text-xl truncate">{char.name}</span>
+              <span className="text-sm text-muted-foreground mt-1">{char.className}</span>
+              <span className="font-mono text-accent font-semibold text-lg md:text-xl mt-1">{dkp[char._id] || 0} DKP</span>
             </li>
           ))}
         </ul>
