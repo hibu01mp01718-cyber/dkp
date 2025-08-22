@@ -38,7 +38,7 @@ export default function DKPDashboard({ dkp, characters }) {
           {userCharacters.map(char => (
             <li key={char._id} className="py-3 flex justify-between items-center">
               <span className="font-medium">{char.name} <span className="text-sm text-muted-foreground">({char.className})</span></span>
-              <span className="font-mono text-accent font-semibold">{dkp[char._id] || 0} DKP</span>
+              <span className="font-mono text-accent font-semibold text-lg md:text-xl">{dkp[char._id] || 0} DKP</span>
             </li>
           ))}
         </ul>

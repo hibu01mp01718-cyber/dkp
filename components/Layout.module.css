@@ -1,8 +1,7 @@
 .mainContainer {
   width: 100%;
   min-height: 100vh;
-  background: #18181b;
-  color: #fff;
+  /* background and color removed to use global body styles */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -12,12 +11,8 @@
 
 .bodyContent {
   width: 100%;
-  max-width: 900px;
   margin: 0 auto;
   padding: 2.5rem 1.5rem 2.5rem 1.5rem;
-  display: flex;
-  flex-direction: column;
-  gap: 3.5rem;
   background: none;
 }
 

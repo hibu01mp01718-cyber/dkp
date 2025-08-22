@@ -12,7 +12,7 @@ export function CustomSelect({ label, value, onChange, options, placeholder = "S
       <button
         type="button"
         className={cn(
-          "w-full flex items-center justify-between rounded-lg border border-border bg-card text-foreground px-3 py-2 focus:outline-none focus:ring-2 focus:ring-accent/60 transition shadow-sm appearance-none",
+          "customSelectButton w-full flex items-center justify-between rounded-lg border border-border bg-card text-foreground px-3 py-2 focus:outline-none focus:ring-2 focus:ring-accent/60 transition shadow-sm appearance-none min-h-[48px] text-base",
           open && "ring-2 ring-accent/60"
         )}
         onClick={() => setOpen(o => !o)}
@@ -23,7 +23,7 @@ export function CustomSelect({ label, value, onChange, options, placeholder = "S
         <ChevronDown size={18} className="ml-2 text-muted-foreground" />
       </button>
       {open && (
-        <ul className="absolute z-50 mt-1 w-full rounded-lg bg-card/95 shadow-lg border border-border max-h-60 overflow-auto animate-in fade-in-0 zoom-in-95" role="listbox">
+        <ul className="customSelectDropdown absolute z-50 mt-1 w-full rounded-lg bg-card/95 shadow-lg border border-border max-h-60 overflow-auto animate-in fade-in-0 zoom-in-95" role="listbox">
           {options.map(opt => (
             <li
               key={opt.value}
@@ -41,6 +41,26 @@ export function CustomSelect({ label, value, onChange, options, placeholder = "S
           ))}
         </ul>
       )}
+      <style jsx global>{`
+        .customSelectButton {
+          background: #18181b;
+          color: #fff;
+          border-radius: 8px;
+          border: 1px solid #2e323c;
+          font-size: 1rem;
+          transition: border 0.15s, outline 0.15s;
+        }
+        .customSelectButton:focus {
+          outline: 2px solid #7f5af0;
+          border-color: #7f5af0;
+        }
+        .customSelectDropdown {
+          background: #23272f !important;
+          color: #fff !important;
+          border-radius: 8px;
+          border: 1px solid #2e323c;
+        }
+      `}</style>
     </div>
   );
 }

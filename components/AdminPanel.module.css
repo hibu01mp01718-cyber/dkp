@@ -1,0 +1,68 @@
+/* Ensure grid and cards are not affected by parent flex styles */
+.adminPanelGrid {
+  display: grid !important;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+@media (min-width: 768px) {
+  .adminPanelGrid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+.adminPanelCard {
+  min-width: 0;
+  width: 100%;
+}
+.adminPanelInput {
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
+  border: 1px solid #2e323c;
+  background: #18181b;
+  color: #fff;
+  font-size: 1rem;
+  transition: border 0.15s, outline 0.15s;
+}
+
+.adminPanelInput:focus {
+  outline: 2px solid #7f5af0;
+  border-color: #7f5af0;
+}
+
+.adminPanelButton {
+  background: #7c3aed;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 0.6rem 1.3rem;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: background 0.15s, color 0.15s, box-shadow 0.15s;
+  cursor: pointer;
+  outline: none;
+  box-shadow: 0 1px 2px 0 rgba(0,0,0,0.04);
+  margin: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.adminPanelButton:hover:not(:disabled) {
+  background: #6d28d9;
+}
+
+.adminPanelButton:active:not(:disabled) {
+  background: #5b21b6;
+}
+
+.adminPanelButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.adminPanelButton.delete {
+  background: #ef4444;
+}
+
+.adminPanelButton.delete:hover:not(:disabled) {
+  background: #dc2626;
+}

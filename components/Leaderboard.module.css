@@ -1,3 +1,9 @@
+/* Increase font size for leaderboard table headers */
+.leaderboardTable th {
+  font-size: 1.25rem;
+  font-weight: 700;
+  padding: 1rem 1.5rem;
+}
 .leaderboardTableWrapper {
   padding: 2rem 1.5rem 1.5rem 1.5rem;
   background: #23272f;

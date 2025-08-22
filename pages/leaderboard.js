@@ -50,27 +50,36 @@ export default function Leaderboard() {
         {loading ? (
           <div>Loading...</div>
         ) : (
-          <div className={leaderboardStyles.leaderboardTableWrapper}>
-            <table className={leaderboardStyles.leaderboardTable}>
-              <thead>
-                <tr>
-                  <th>Rank</th>
-                  <th>Character</th>
-                  <th>Class</th>
-                  <th>DKP</th>
-                </tr>
-              </thead>
-              <tbody>
-                {leaderboard.map((char, idx) => (
-                  <tr key={char._id || idx}>
-                    <td>{idx + 1}</td>
-                    <td>{char.name}</td>
-                    <td>{char.className}</td>
-                    <td>{char.dkp}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+          <div style={{ display: 'flex', gap: '2rem', flexWrap: 'nowrap', justifyContent: 'center', alignItems: 'flex-start' }}>
+            {[0, 1].map(tableIdx => {
+              const half = Math.ceil(leaderboard.length / 2);
+              const start = tableIdx === 0 ? 0 : half;
+              const end = tableIdx === 0 ? half : leaderboard.length;
+              return (
+                <div className={leaderboardStyles.leaderboardTableWrapper} key={tableIdx} style={{ minWidth: 320, flex: 1 }}>
+                  <table className={leaderboardStyles.leaderboardTable}>
+                    <thead>
+                      <tr>
+                        <th>Rank</th>
+                        <th>Character</th>
+                        <th>Class</th>
+                        <th>DKP</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {leaderboard.slice(start, end).map((char, idx) => (
+                        <tr key={char._id || idx}>
+                          <td style={{ padding: '0.85rem 2.2rem', minWidth: 60 }}>{start + idx + 1}</td>
+                          <td style={{ padding: '0.85rem 2.2rem', minWidth: 120 }}>{char.name}</td>
+                          <td style={{ padding: '0.85rem 2.2rem', minWidth: 120, whiteSpace: 'nowrap' }}>{char.className}</td>
+                          <td style={{ padding: '0.85rem 2.2rem', minWidth: 80 }}>{char.dkp}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              );
+            })}
           </div>
         )}
       </section>

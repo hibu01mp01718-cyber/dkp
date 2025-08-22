@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { CustomSelect } from './ui/CustomSelect';
+import { ModernSelect } from './ui/ModernSelect';
 
 export default function GuildDropdown({ value, onChange, valueType = 'id' }) {
   const [guilds, setGuilds] = useState([]);
@@ -21,6 +21,10 @@ export default function GuildDropdown({ value, onChange, valueType = 'id' }) {
     }))
   ];
   return (
-    <CustomSelect label="Guild" value={value} onChange={onChange} options={options} />
+    <ModernSelect label="Guild" value={value} onChange={e => onChange(e.target.value)} required>
+      {options.map(opt => (
+        <option key={opt.value} value={opt.value}>{opt.label}</option>
+      ))}
+    </ModernSelect>
   );
 }

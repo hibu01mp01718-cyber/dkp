@@ -1,3 +1,18 @@
+/* Match AddEventForm.module.css input style for event editing */
+.adminEventInput {
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
+  border: 1px solid #2e323c;
+  background: #18181b;
+  color: #fff;
+  font-size: 1rem;
+  transition: border 0.15s, outline 0.15s;
+}
+
+.adminEventInput:focus {
+  outline: 2px solid #7f5af0;
+  border-color: #7f5af0;
+}
 .adminEventsSection {
   width: 100%;
   max-width: 700px;

@@ -24,7 +24,6 @@ export default function AdminEventsPage() {
   return (
     <Layout>
       <section className={adminEventsStyles.adminEventsSection}>
-        <h1 className={adminEventsStyles.adminEventsTitle}>Manage Events</h1>
         <ManageEvents />
       </section>
     </Layout>

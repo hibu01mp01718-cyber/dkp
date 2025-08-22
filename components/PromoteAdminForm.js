@@ -1,3 +1,5 @@
+
+import adminPanelStyles from './AdminPanel.module.css';
 import { useState } from 'react'
 
 export default function PromoteAdminForm() {
@@ -35,7 +37,7 @@ export default function PromoteAdminForm() {
   {/* Guild ID field removed */}
       {error && <div className="text-red-400 mb-2">{error}</div>}
       {success && <div className="text-green-400 mb-2">{success}</div>}
-      <button type="submit" className="bg-accent px-4 py-2 rounded" disabled={loading}>{loading ? 'Processing...' : 'Promote'}</button>
+  <button type="submit" className={adminPanelStyles.adminPanelButton} disabled={loading}>{loading ? 'Processing...' : 'Promote'}</button>
     </form>
   )
 }

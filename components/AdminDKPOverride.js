@@ -1,5 +1,7 @@
+
 import { useState } from 'react'
 import { CustomSelect } from './ui/CustomSelect'
+import adminPanelStyles from './AdminPanel.module.css';
 
 export default function AdminDKPOverride({ characters, onSubmit }) {
   const [characterId, setCharacterId] = useState('')
@@ -47,7 +49,7 @@ export default function AdminDKPOverride({ characters, onSubmit }) {
       </div>
       {error && <div className="text-red-400 mb-2">{error}</div>}
       {success && <div className="text-green-400 mb-2">{success}</div>}
-      <button type="submit" className="bg-accent px-4 py-2 rounded" disabled={loading}>{loading ? 'Processing...' : 'Override'}</button>
+  <button type="submit" className={adminPanelStyles.adminPanelButton} disabled={loading}>{loading ? 'Processing...' : 'Override'}</button>
     </form>
   )
 }

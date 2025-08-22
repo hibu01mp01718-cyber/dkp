@@ -1,6 +1,6 @@
 
 import { useState, useEffect } from 'react';
-import { CustomSelect } from './ui/CustomSelect';
+import { ModernSelect } from './ui/ModernSelect';
 import styles from './DKPForm.module.css';
 
 export default function DKPForm({ characters, onSubmit }) {
@@ -69,26 +69,30 @@ export default function DKPForm({ characters, onSubmit }) {
     <form onSubmit={handleSubmit} className={styles.formContainer}>
       <h3 className={styles.formTitle}>Add/Remove DKP</h3>
       <div className={styles.formField}>
-        <CustomSelect
+        <ModernSelect
           label="Character"
           value={characterId}
-          onChange={setCharacterId}
-          options={[
-            { value: '', label: 'Select character' },
-            ...characters.map(char => ({ value: char._id, label: char.name }))
-          ]}
-        />
+          onChange={e => setCharacterId(e.target.value)}
+          required
+        >
+          <option value="">Select character</option>
+          {characters.map(char => (
+            <option key={char._id} value={char._id}>{char.name}</option>
+          ))}
+        </ModernSelect>
       </div>
       <div className={styles.formField}>
-        <CustomSelect
+        <ModernSelect
           label="Event Name"
           value={eventName}
-          onChange={setEventName}
-          options={[
-            { value: '', label: 'Select event' },
-            ...events.map(ev => ({ value: ev.name, label: `${ev.name} (${ev.dkp} DKP)` }))
-          ]}
-        />
+          onChange={e => setEventName(e.target.value)}
+          required
+        >
+          <option value="">Select event</option>
+          {events.map(ev => (
+            <option key={ev.name} value={ev.name}>{`${ev.name} (${ev.dkp} DKP)`}</option>
+          ))}
+        </ModernSelect>
       </div>
       <div className={styles.formField}>
         <label htmlFor="dkp-pin">PIN</label>

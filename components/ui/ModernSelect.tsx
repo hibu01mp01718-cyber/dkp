@@ -13,11 +13,12 @@ export const ModernSelect = React.forwardRef<HTMLSelectElement, SelectProps>(
       <select
         ref={ref}
         className={cn(
-          "w-full rounded-lg border border-border bg-card text-foreground px-3 py-2 focus:outline-none focus:ring-2 focus:ring-accent/60 transition shadow-sm appearance-none modern-select",
+          "formInput modern-select w-full border border-[#2e323c] bg-[#18181b] text-white rounded-lg px-4 py-3 text-base focus:outline-none focus:ring-2 focus:ring-[#7f5af0] transition shadow-sm appearance-none",
+          "dropdown-padding",
           error && "border-red-500",
           className
         )}
-        style={{ color: 'var(--card-foreground, #f3f4f6)', background: 'var(--card, #23272f)' }}
+        style={{ color: '#fff', background: '#18181b', minHeight: '48px', fontSize: '1rem', boxSizing: 'border-box' }}
         {...props}
       >
         {children}
@@ -26,6 +27,12 @@ export const ModernSelect = React.forwardRef<HTMLSelectElement, SelectProps>(
         select.modern-select option {
           color: var(--card-foreground, #f3f4f6);
           background: var(--card, #23272f);
+          padding-left: 1rem;
+          padding-right: 1rem;
+        }
+        .dropdown-padding {
+          padding-left: 1rem !important;
+          padding-right: 1rem !important;
         }
       `}</style>
       {error && <div className="text-xs text-red-400 mt-1">{error}</div>}
