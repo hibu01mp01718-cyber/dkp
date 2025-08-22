@@ -55,7 +55,17 @@ export default function Navbar({ user, onLogout }) {
               </div>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" style={{ padding: 0, minWidth: 0, background: 'none' }}>
+                  <Button
+                    variant="ghost"
+                    style={{
+                      padding: 0,
+                      minWidth: 0,
+                      background: 'none',
+                      boxShadow: 'none',
+                      border: 'none',
+                    }}
+                    className="!shadow-none !bg-transparent hover:!bg-[#23272f] focus:!bg-[#23272f] focus:!ring-0 focus:!outline-none"
+                  >
                     <ChevronDown size={16} style={{ marginLeft: 4 }} />
                   </Button>
                 </DropdownMenuTrigger>
