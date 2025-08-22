@@ -28,17 +28,25 @@ export default function DKPDashboard({ dkp, characters }) {
         <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">Welcome{session?.user?.name ? `, ${session.user.name}` : ''}</h1>
         <p className="text-muted-foreground text-base">Track your DKP, manage your characters, and view your progress.</p>
       </div>
-
-  <Card className={styles.dashboardCard + ' ' + styles.dashboardCardPadded}>
+      <Card className={styles.dashboardCard + ' ' + styles.dashboardCardPadded}>
         <h2 className="text-lg font-semibold mb-4">Your Characters</h2>
         <ul className="divide-y divide-border">
           {userCharacters.length === 0 && (
             <li className="py-4 text-muted-foreground text-center">No characters found.</li>
           )}
           {userCharacters.map(char => (
-            <li key={char._id} className="py-3 flex justify-between items-center">
-              <span className="font-medium">{char.name} <span className="text-sm text-muted-foreground">({char.className})</span></span>
-              <span className="font-mono text-accent font-semibold text-lg md:text-xl">{dkp[char._id] || 0} DKP</span>
+            <li
+              key={char._id}
+              className="py-3 grid grid-cols-3 items-center gap-2"
+              style={{ minWidth: 0 }}
+            >
+              <span className="font-medium truncate flex items-center">
+                {char.name}
+                <span className="ml-2 text-sm text-muted-foreground">({char.className})</span>
+              </span>
+              <span className="font-mono text-accent font-semibold text-lg md:text-xl text-right">
+                {dkp[char._id] || 0} DKP
+              </span>
             </li>
           ))}
         </ul>

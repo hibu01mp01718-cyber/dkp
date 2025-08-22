@@ -67,7 +67,7 @@ export default function DKPForm({ characters, onSubmit }) {
 
   return (
     <form onSubmit={handleSubmit} className={styles.formContainer}>
-      <h3 className={styles.formTitle}>Add/Remove DKP</h3>
+  <h3 className={styles.formTitle}>Claim DKP</h3>
       <div className={styles.formField}>
         <ModernSelect
           label="Character"

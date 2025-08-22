@@ -5,13 +5,39 @@
   user-select: none;
 }
 
+
+
+.dashboardCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.dashboardSection {
+  min-height: 70vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.2rem;
+  user-select: none;
+  max-width: 100vw;
+  overflow-x: hidden;
+}
 .dashboardCard {
   margin-bottom: 0 !important;
-  padding: 2rem 1.5rem 1.5rem 1.5rem;
+  padding: 0.7rem 0 0.5rem 0;
   max-width: 700px;
   width: 100%;
   margin-left: auto;
   margin-right: auto;
+}
+
+.dashboardCardPadded {
+  max-width: 100%;
+  width: 100%;
+  padding: 0.4rem 0 0.3rem 0 !important;
+  box-sizing: border-box;
 }
 
 /* Override Card padding for Your Characters section */
