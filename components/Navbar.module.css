@@ -24,7 +24,7 @@
 
 .logo {
   font-weight: 800;
-  font-size: 1.25rem;
+  font-size: 1rem;
   letter-spacing: -0.02em;
   color: #fff;
   text-decoration: none;
@@ -41,11 +41,15 @@
 .navLink {
   color: #b3b3b3;
   font-weight: 500;
-  font-size: 1rem;
+  font-size: 0.9rem;
   text-decoration: none;
   padding: 0.5rem 1.25rem;
   border-radius: 8px;
   transition: background 0.15s, color 0.15s;
+  white-space: nowrap;
+  max-width: 140px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .navLink:hover {

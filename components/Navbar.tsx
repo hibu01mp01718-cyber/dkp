@@ -13,7 +13,10 @@ export default function Navbar({ user, onLogout }) {
     { href: '/leaderboard', label: 'Leaderboard' },
     { href: '/auctions', label: 'Auctions' },
   ];
-  if (user?.isAdmin) navLinks.push({ href: '/admin-events', label: 'Admin Events' });
+  if (user?.isAdmin) {
+    navLinks.push({ href: '/admin-events', label: 'Admin Events' });
+    navLinks.push({ href: '/consignment', label: 'Consignment' });
+  }
 
   // If not logged in, only show Dashboard link
   if (!user) {

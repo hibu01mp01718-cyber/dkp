@@ -231,17 +231,23 @@ export default function BidsPage() {
 	return (
 		<Layout>
 			<section className="min-h-screen flex flex-col items-center justify-start py-12">
-				{/* Character DKP balances styled as dashboard cards */}
-				{userChars.length > 0 && (
-					<div className="flex flex-row flex-wrap gap-6 mb-10 w-full max-w-5xl justify-start">
-						{userChars.map(char => (
-							<div key={char._id} className="bg-[#181a20] rounded-lg px-6 py-4 flex flex-col border border-[#23262d] min-w-[180px] max-w-xs" style={{marginTop: 8, marginBottom: 8, paddingTop: 16, paddingBottom: 16, paddingLeft: 16}}>
-								<span className="text-sm text-blue-200 font-semibold mb-2">Available DKP</span>
-								<span className="text-2xl font-extrabold text-white leading-tight">{char.dkp ?? 0}</span>
-							</div>
-						))}
-					</div>
-				)}
+				   {/* Character DKP balances styled as dashboard cards */}
+				   <div className="flex flex-row flex-wrap gap-6 mb-10 w-full max-w-5xl justify-start">
+					   {userChars.length > 0 ? (
+						   userChars.map(char => (
+							   <div key={char._id} className="bg-[#181a20] rounded-lg px-6 py-4 flex flex-col border border-[#23262d] min-w-[180px] max-w-xs" style={{marginTop: 8, marginBottom: 8, paddingTop: 16, paddingBottom: 16, paddingLeft: 16}}>
+								   <span className="text-sm text-blue-200 font-semibold mb-2">Available DKP</span>
+								   <span className="text-2xl font-extrabold text-white leading-tight">{char.dkp ?? 0}</span>
+							   </div>
+						   ))
+					   ) : (
+						   <div className="bg-[#181a20] rounded-lg px-6 py-4 flex flex-col border border-[#23262d] min-w-[180px] max-w-xs" style={{marginTop: 8, marginBottom: 8, paddingTop: 16, paddingBottom: 16, paddingLeft: 16}}>
+							   <span className="text-sm text-blue-200 font-semibold mb-2">Available DKP</span>
+							   <span className="text-2xl font-extrabold text-white leading-tight">0</span>
+							   <span className="text-xs text-gray-400 mt-2">No character found</span>
+						   </div>
+					   )}
+				   </div>
 	<h1 className="text-3xl font-bold text-white mb-8">Guild Auction</h1>
 				<div className="w-full max-w-6xl bg-[#23262d] rounded-xl shadow-lg p-4">
 					<table className="w-full rounded-xl overflow-hidden">
