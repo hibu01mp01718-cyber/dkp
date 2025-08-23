@@ -15,19 +15,23 @@ export const authOptions = {
     updateAge: 24 * 60 * 60,   // 24 hours
   },
   callbacks: {
-    async session({ session, token, user }) {
-      session.user.id = token.sub;
-      // Add isAdmin to session.user
+    async jwt({ token }) {
+      // Add isAdmin to token
       try {
         const clientPromise = (await import('../../../lib/mongodb.js')).default;
         const { collections } = await import('../../../lib/models.js');
         const client = await clientPromise;
         const db = client.db();
         const dbUser = await db.collection(collections.USERS).findOne({ userId: token.sub });
-        session.user.isAdmin = !!dbUser?.isAdmin;
+        token.isAdmin = !!dbUser?.isAdmin;
       } catch (e) {
-        session.user.isAdmin = false;
+        token.isAdmin = false;
       }
+      return token;
+    },
+    async session({ session, token, user }) {
+      session.user.id = token.sub;
+      session.user.isAdmin = !!token.isAdmin;
       return session;
     },
   },

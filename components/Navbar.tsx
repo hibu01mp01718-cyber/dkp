@@ -11,6 +11,7 @@ export default function Navbar({ user, onLogout }) {
     { href: '/', label: 'Dashboard' },
     { href: '/characters', label: 'Characters' },
     { href: '/leaderboard', label: 'Leaderboard' },
+    { href: '/auctions', label: 'Auctions' },
   ];
   if (user?.isAdmin) navLinks.push({ href: '/admin-events', label: 'Admin Events' });
 

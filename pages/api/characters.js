@@ -45,8 +45,17 @@ export default async function handler(req, res) {
     if (guildId) query.guildId = guildId;
     console.log('[GET /api/characters] userId:', session.user.id, 'guildId:', guildId);
     const chars = await db.collection(collections.CHARACTERS).find(query).toArray();
-    console.log('[GET /api/characters] found:', chars.length, 'characters');
-    return res.json(chars);
+    // For each character, sum their DKP from the dkp collection
+    const charIds = chars.map(c => c._id?.toString());
+    const dkpAgg = await db.collection(collections.DKP).aggregate([
+      { $match: { characterId: { $in: charIds } } },
+      { $group: { _id: "$characterId", total: { $sum: "$amount" } } }
+    ]).toArray();
+    const dkpMap = {};
+    dkpAgg.forEach(d => { dkpMap[d._id] = d.total; });
+    const charsWithDKP = chars.map(c => ({ ...c, dkp: dkpMap[c._id?.toString()] || 0 }));
+    console.log('[GET /api/characters] found:', charsWithDKP.length, 'characters');
+    return res.json(charsWithDKP);
   }
 
   if (req.method === 'POST') {
