@@ -26,6 +26,16 @@ export default async function handler(req, res) {
   const char = await db.collection(collections.CHARACTERS).findOne({ _id: new ObjectId(bid.characterId) });
   if (!char) return res.status(404).json({ error: 'Character not found' });
 
+  // Calculate current DKP for the character
+  const dkpAgg = await db.collection(collections.DKP).aggregate([
+    { $match: { characterId: char._id.toString() } },
+    { $group: { _id: "$characterId", total: { $sum: "$amount" } } }
+  ]).toArray();
+  const currentDKP = dkpAgg.length > 0 ? dkpAgg[0].total : 0;
+  if (currentDKP < bid.amount) {
+    return res.status(400).json({ error: 'Not enough DKP to assign item. Assignment blocked.' });
+  }
+
   // Deduct DKP from the winner (insert negative DKP record)
   await db.collection(collections.DKP).insertOne({
     characterId: char._id.toString(),
