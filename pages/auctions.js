@@ -1,6 +1,8 @@
+
 import Layout from '../components/Layout';
 import styles from '../components/AddEventForm.module.css';
 import { ModernSelect } from '../components/ui/ModernSelect';
+import { SortIcon } from '../components/ui/SortIcon';
 import { useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
 
@@ -187,12 +189,16 @@ function BidTableRow({ item, bids, characters, user, onBidPlaced, isAdmin, onDel
 	);
 }
 
+
 export default function BidsPage() {
 	const { data: session } = useSession();
 	const [items, setItems] = useState([]);
 	const [characters, setCharacters] = useState([]);
 	const [bids, setBids] = useState([]);
 	const [refresh, setRefresh] = useState(false);
+
+	// Sorting state
+	const [sortConfig, setSortConfig] = useState({ key: 'endTime', direction: 'asc' });
 
 	useEffect(() => {
 		if (!session) return;
@@ -228,44 +234,99 @@ export default function BidsPage() {
 
 	const userChars = characters.filter(c => c.userId === session?.user?.id);
 
+	// Sorting logic
+	const getHighestBid = (item) => {
+		const itemBids = bids.filter((bid) => bid.itemId === item._id);
+		if (!itemBids.length) return null;
+		return itemBids.reduce((max, b) => (b.amount > (max?.amount || 0) ? b : max), null);
+	};
+
+	const sortedItems = [...items].sort((a, b) => {
+		const { key, direction } = sortConfig;
+		let aValue = a[key];
+		let bValue = b[key];
+		// Custom sort for columns
+		if (key === 'highestBid') {
+			aValue = getHighestBid(a)?.amount || 0;
+			bValue = getHighestBid(b)?.amount || 0;
+		} else if (key === 'winner') {
+			const aChar = getHighestBid(a) ? characters.find(c => c._id === getHighestBid(a).characterId) : null;
+			const bChar = getHighestBid(b) ? characters.find(c => c._id === getHighestBid(b).characterId) : null;
+			aValue = aChar?.name || '';
+			bValue = bChar?.name || '';
+		} else if (key === 'endTime') {
+			aValue = a.endTime ? new Date(a.endTime).getTime() : 0;
+			bValue = b.endTime ? new Date(b.endTime).getTime() : 0;
+		} else if (typeof aValue === 'string' && typeof bValue === 'string') {
+			aValue = aValue.toLowerCase();
+			bValue = bValue.toLowerCase();
+		}
+		if (aValue < bValue) return direction === 'asc' ? -1 : 1;
+		if (aValue > bValue) return direction === 'asc' ? 1 : -1;
+		return 0;
+	});
+
+	const handleSort = (key) => {
+		setSortConfig((prev) => {
+			if (prev.key === key) {
+				return { key, direction: prev.direction === 'asc' ? 'desc' : 'asc' };
+			}
+			return { key, direction: 'asc' };
+		});
+	};
+
 	return (
 		<Layout>
 			<section className="min-h-screen flex flex-col items-center justify-start py-12">
-				   {/* Character DKP balances styled as dashboard cards */}
-				   <div className="flex flex-row flex-wrap gap-6 mb-10 w-full max-w-5xl justify-start">
-					   {userChars.length > 0 ? (
-						   userChars.map(char => (
-							   <div key={char._id} className="bg-[#181a20] rounded-lg px-6 py-4 flex flex-col border border-[#23262d] min-w-[180px] max-w-xs" style={{marginTop: 8, marginBottom: 8, paddingTop: 16, paddingBottom: 16, paddingLeft: 16}}>
-								   <span className="text-sm text-blue-200 font-semibold mb-2">Available DKP</span>
-								   <span className="text-2xl font-extrabold text-white leading-tight">{char.dkp ?? 0}</span>
-							   </div>
-						   ))
-					   ) : (
-						   <div className="bg-[#181a20] rounded-lg px-6 py-4 flex flex-col border border-[#23262d] min-w-[180px] max-w-xs" style={{marginTop: 8, marginBottom: 8, paddingTop: 16, paddingBottom: 16, paddingLeft: 16}}>
-							   <span className="text-sm text-blue-200 font-semibold mb-2">Available DKP</span>
-							   <span className="text-2xl font-extrabold text-white leading-tight">0</span>
-							   <span className="text-xs text-gray-400 mt-2">No character found</span>
-						   </div>
-					   )}
-				   </div>
-	<h1 className="text-3xl font-bold text-white mb-8">Guild Auction</h1>
+				{/* Character DKP balances styled as dashboard cards */}
+				<div className="flex flex-row flex-wrap gap-6 mb-10 w-full max-w-5xl justify-start">
+					{userChars.length > 0 ? (
+						userChars.map(char => (
+							<div key={char._id} className="bg-[#181a20] rounded-lg px-6 py-4 flex flex-col border border-[#23262d] min-w-[180px] max-w-xs" style={{marginTop: 8, marginBottom: 8, paddingTop: 16, paddingBottom: 16, paddingLeft: 16}}>
+								<span className="text-sm text-blue-200 font-semibold mb-2">Available DKP</span>
+								<span className="text-2xl font-extrabold text-white leading-tight">{char.dkp ?? 0}</span>
+							</div>
+						))
+					) : (
+						<div className="bg-[#181a20] rounded-lg px-6 py-4 flex flex-col border border-[#23262d] min-w-[180px] max-w-xs" style={{marginTop: 8, marginBottom: 8, paddingTop: 16, paddingBottom: 16, paddingLeft: 16}}>
+							<span className="text-sm text-blue-200 font-semibold mb-2">Available DKP</span>
+							<span className="text-2xl font-extrabold text-white leading-tight">0</span>
+							<span className="text-xs text-gray-400 mt-2">No character found</span>
+						</div>
+					)}
+				</div>
+				<h1 className="text-3xl font-bold text-white mb-8">Guild Auction</h1>
 				<div className="w-full max-w-6xl bg-[#23262d] rounded-xl shadow-lg p-4">
 					<table className="w-full rounded-xl overflow-hidden">
 						<thead>
 							<tr className="bg-[#181a20] text-white">
-								<th className="py-6 text-center font-semibold" style={{paddingTop: '1.25rem', paddingBottom: '1.25rem', paddingLeft: 0, paddingRight: 0}}>Name</th>
-								<th className="py-6 text-center font-semibold" style={{paddingTop: '1.25rem', paddingBottom: '1.25rem', paddingLeft: 0, paddingRight: 0}}>Description</th>
-								<th className="py-6 text-center font-semibold" style={{paddingTop: '1.25rem', paddingBottom: '1.25rem', paddingLeft: 0, paddingRight: 0}}>Time Left</th>
-								<th className="py-6 text-center font-semibold" style={{paddingTop: '1.25rem', paddingBottom: '1.25rem', paddingLeft: 0, paddingRight: 0}}>Highest Bid</th>
-								<th className="py-6 text-center font-semibold" style={{paddingTop: '1.25rem', paddingBottom: '1.25rem', paddingLeft: 0, paddingRight: 0}}>Min Bid</th>
-								<th className="py-6 text-center font-semibold" style={{paddingTop: '1.25rem', paddingBottom: '1.25rem', paddingLeft: 0, paddingRight: 0}}>Increment</th>
-								<th className="py-6 text-center font-semibold" style={{paddingTop: '1.25rem', paddingBottom: '1.25rem', paddingLeft: 0, paddingRight: 0}}>Winner</th>
+								<th className="py-6 text-center font-semibold cursor-pointer" style={{paddingTop: '1.25rem', paddingBottom: '1.25rem', paddingLeft: 0, paddingRight: 0}} onClick={() => handleSort('name')}>
+									Name <SortIcon direction={sortConfig.key === 'name' ? sortConfig.direction : undefined} />
+								</th>
+								<th className="py-6 text-center font-semibold cursor-pointer" style={{paddingTop: '1.25rem', paddingBottom: '1.25rem', paddingLeft: 0, paddingRight: 0}} onClick={() => handleSort('description')}>
+									Description <SortIcon direction={sortConfig.key === 'description' ? sortConfig.direction : undefined} />
+								</th>
+								<th className="py-6 text-center font-semibold cursor-pointer" style={{paddingTop: '1.25rem', paddingBottom: '1.25rem', paddingLeft: 0, paddingRight: 0}} onClick={() => handleSort('endTime')}>
+									Time Left <SortIcon direction={sortConfig.key === 'endTime' ? sortConfig.direction : undefined} />
+								</th>
+								<th className="py-6 text-center font-semibold cursor-pointer" style={{paddingTop: '1.25rem', paddingBottom: '1.25rem', paddingLeft: 0, paddingRight: 0}} onClick={() => handleSort('highestBid')}>
+									Highest Bid <SortIcon direction={sortConfig.key === 'highestBid' ? sortConfig.direction : undefined} />
+								</th>
+								<th className="py-6 text-center font-semibold cursor-pointer" style={{paddingTop: '1.25rem', paddingBottom: '1.25rem', paddingLeft: 0, paddingRight: 0}} onClick={() => handleSort('minBid')}>
+									Min Bid <SortIcon direction={sortConfig.key === 'minBid' ? sortConfig.direction : undefined} />
+								</th>
+								<th className="py-6 text-center font-semibold cursor-pointer" style={{paddingTop: '1.25rem', paddingBottom: '1.25rem', paddingLeft: 0, paddingRight: 0}} onClick={() => handleSort('increment')}>
+									Increment <SortIcon direction={sortConfig.key === 'increment' ? sortConfig.direction : undefined} />
+								</th>
+								<th className="py-6 text-center font-semibold cursor-pointer" style={{paddingTop: '1.25rem', paddingBottom: '1.25rem', paddingLeft: 0, paddingRight: 0}} onClick={() => handleSort('winner')}>
+									Winner <SortIcon direction={sortConfig.key === 'winner' ? sortConfig.direction : undefined} />
+								</th>
 								<th className="py-6 text-center font-semibold" style={{paddingTop: '1.25rem', paddingBottom: '1.25rem', paddingLeft: 0, paddingRight: 0}}>Bid</th>
 								{session?.user?.isAdmin && <th className="py-6 text-center font-semibold" style={{paddingTop: '1.25rem', paddingBottom: '1.25rem', paddingLeft: 0, paddingRight: 0}}>Actions</th>}
 							</tr>
 						</thead>
 						<tbody>
-							{items.map((item) => (
+							{sortedItems.map((item) => (
 								<BidTableRow
 									key={item._id}
 									item={item}
