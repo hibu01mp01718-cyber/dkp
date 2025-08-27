@@ -40,6 +40,22 @@ export default async function handler(req, res) {
     if (amount < minAllowed) {
       return res.status(400).json({ error: `Bid must be at least ${minAllowed}` });
     }
+
+    // --- Anti-sniping logic: extend auction if bid placed with <10min left ---
+    if (item.endTime) {
+      const now = Date.now();
+      const end = new Date(item.endTime).getTime();
+      const tenMinutes = 10 * 60 * 1000;
+      if (end - now > 0 && end - now < tenMinutes) {
+        const newEndTime = new Date(now + tenMinutes);
+        await db.collection(collections.ITEMS).updateOne(
+          { _id: itemObjId },
+          { $set: { endTime: newEndTime } }
+        );
+      }
+    }
+    // --- End anti-sniping logic ---
+
     const bid = {
       itemId,
       characterId,
